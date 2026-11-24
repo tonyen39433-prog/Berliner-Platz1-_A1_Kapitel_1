@@ -1,0 +1,3300 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="showroom">
+  <title>Berliner Platz 1 NEU — Kapitel 1: Hallo! 互動學習網頁</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* 1. Showroom Palette & Tokens */
+      --background: #fbfbfd;
+      --surface-container-low: #f5f5f7;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+
+      --outline: #d2d2d7;
+      --outline-variant: #e5e5ea;
+
+      --primary: #006bd6;
+      --on-primary: #ffffff;
+      --primary-hover: #0058b0;
+      --primary-container: #e8f1fd;
+      --on-primary-container: #0058b0;
+
+      --secondary: #bf4800;
+      --secondary-container: #fdf0e6;
+      --on-secondary-container: #943700;
+
+      --tertiary: #1d1d1f;
+
+      --error: #d70015;
+      --on-error: #ffffff;
+      --error-container: #fde8ea;
+      --on-error-container: #a80010;
+
+      /* Data series */
+      --data-1: #006bd6;
+      --data-2: #bf4800;
+      --data-3: #248a3d;
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      /* Fonts */
+      --font-headline: 'Inter Tight', 'Noto Sans TC', sans-serif;
+      --font-body: 'Inter', 'Noto Sans TC', sans-serif;
+      --font-label: 'Inter', 'Noto Sans TC', sans-serif;
+
+      /* Shape */
+      --rounded: 9999px;
+      --rounded-sm: 0.75rem;
+      --rounded-lg: 1.25rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --headline-tracking: -0.035em;
+      --section-tracking: -0.02em;
+      --figure-tracking: -0.03em;
+      --tile-shadow-hover: 0 8px 28px rgb(0 0 0 / 0.08);
+      --card-flip-shadow: 0 12px 32px rgb(0 0 0 / 0.07);
+      --chevron: " \203A";
+
+      /* 3. Shared Foundation Tokens */
+      --positive: #1d7a36;
+      --on-positive: #ffffff;
+      --positive-container: #e6f4ea;
+      --on-positive-container: #145a27;
+      --warning: #9a5b00;
+      --warning-container: #fef4e6;
+      --on-warning-container: #7a4700;
+      --focus: var(--primary);
+
+      /* Type scale (Narrative) */
+      --display-size: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+      --headline-size: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
+      --subhead-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.4375rem);
+      --body-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.15vw, 0.875rem);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      color: var(--on-surface);
+      background-color: var(--background);
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1120px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Band Layout (Showroom Treatment #4) */
+    .band {
+      padding-block: var(--space-2xl);
+      background-color: var(--background);
+    }
+    .band.alt {
+      background-color: var(--surface-container-low);
+    }
+    .container {
+      max-width: 1080px;
+      margin-inline: auto;
+      padding-inline: var(--space-lg);
+    }
+    .container > * { min-width: 0; }
+
+    /* Centered Headline Stack (Showroom Treatment #1) */
+    .headline-stack {
+      text-align: center;
+      padding-block: var(--space-lg) var(--space-xl);
+    }
+    .eyebrow {
+      display: inline-block;
+      color: var(--secondary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .headline-stack h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.06;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .headline-stack h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      letter-spacing: var(--section-tracking);
+      line-height: 1.1;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .headline-stack .lede {
+      color: var(--on-surface-variant);
+      max-width: 56ch;
+      margin: var(--space-md) auto 0;
+      font-size: var(--subhead-size);
+      line-height: 1.5;
+    }
+
+    .de-word {
+      font-family: var(--font-headline);
+      letter-spacing: -0.02em;
+    }
+
+    /* Pill Actions & Chevron Links (Showroom Treatment #3) */
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .btn-primary,
+    .btn-secondary,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded);
+      border: 0;
+      cursor: pointer;
+      font-family: var(--font-label);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color var(--dur-short) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out),
+                  opacity var(--dur-short) var(--ease-out);
+    }
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+    }
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+    .btn-secondary {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background-color: var(--surface-container-high);
+    }
+    .btn-ghost {
+      background-color: transparent;
+      color: var(--primary);
+      padding-inline: var(--space-sm);
+    }
+    .btn-ghost:hover:not(:disabled) {
+      background-color: var(--primary-container);
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .link-more {
+      color: var(--primary);
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: var(--space-xs);
+    }
+    .link-more::after {
+      content: var(--chevron);
+      margin-left: var(--space-xs);
+    }
+    .link-more:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Borderless Rounded Tiles (Showroom Treatment #2) */
+    .tile {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl) var(--space-lg);
+      border: 0;
+      transition: transform var(--dur-short) var(--ease-out),
+                  box-shadow var(--dur-short) var(--ease-out),
+                  background-color var(--dur-short) var(--ease-out);
+    }
+    .band.alt .tile {
+      background-color: var(--background);
+    }
+    .tile-interactive {
+      cursor: pointer;
+    }
+    .tile-interactive:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tile-shadow-hover);
+    }
+    .tile.figure {
+      text-align: center;
+      padding: var(--space-lg);
+    }
+    .tile.figure .label {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+    .tile.figure .value {
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 1.6rem + 1.5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: var(--figure-tracking);
+      line-height: 1.1;
+      color: var(--on-surface);
+      margin-block: var(--space-xs);
+      font-variant-numeric: tabular-nums;
+    }
+    .tile.figure .caption {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+
+    /* Adaptive Grid */
+    .card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+    .split-asymmetric {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    /* Section Jump Nav */
+    .chapter-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-xl);
+      padding: var(--space-sm);
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+    }
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      text-decoration: none;
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out);
+    }
+    .nav-pill:hover {
+      background-color: var(--background);
+      color: var(--primary);
+    }
+    .nav-status {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: var(--label-size);
+      font-weight: 500;
+    }
+
+    /* Chips & Segmented Controls */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .filter-pill {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out);
+    }
+    .filter-pill:hover {
+      background-color: var(--surface-container-high);
+    }
+    .filter-pill.active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .segmented-track {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      padding: var(--space-xs);
+      background-color: var(--surface-container);
+      border-radius: var(--rounded);
+    }
+    .segmented-btn {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: transparent;
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out);
+    }
+    .segmented-btn.active {
+      background-color: var(--background);
+      color: var(--primary);
+      box-shadow: var(--tile-shadow-hover);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 500;
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .chip.neutral {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .chip.positive {
+      background-color: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .chip.secondary {
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+    }
+
+    /* Section Subheadings inside tiles */
+    .tile-title {
+      font-family: var(--font-headline);
+      font-size: 1.3125rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-xs);
+    }
+    .tile-subtitle {
+      color: var(--on-surface-variant);
+      font-size: 0.9375rem;
+      margin: 0 0 var(--space-lg);
+    }
+
+    /* Section 1: Flashcards */
+    .flashcard-stage {
+      perspective: 1200px;
+      margin-block: var(--space-lg);
+    }
+    .flashcard {
+      position: relative;
+      width: 100%;
+      min-height: 310px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform var(--dur-long) var(--ease-out);
+      border-radius: var(--rounded-lg);
+    }
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    .flashcard-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      background-color: var(--background);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--card-flip-shadow);
+    }
+    .flashcard-face.back {
+      transform: rotateY(180deg);
+      background-color: var(--background);
+    }
+    .flashcard-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .flashcard-center {
+      text-align: center;
+      padding-block: var(--space-md);
+    }
+    .flashcard-de {
+      font-family: var(--font-headline);
+      font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: var(--section-tracking);
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .flashcard-meta {
+      color: var(--on-surface-variant);
+      font-size: 0.9375rem;
+      margin-top: var(--space-xs);
+    }
+    .flashcard-zh {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 var(--space-sm);
+    }
+    .flashcard-example {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+      text-align: left;
+      max-width: 54ch;
+      margin-inline: auto;
+    }
+    .flashcard-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Vocabulary Quick-Scan Grid */
+    .vocab-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .vocab-item {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .band.alt .vocab-item {
+      background-color: var(--surface-container-low);
+    }
+    .vocab-item:hover {
+      background-color: var(--primary-container);
+    }
+    .vocab-item .term {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      color: var(--on-surface);
+      font-size: 1.0625rem;
+    }
+    .vocab-item .meaning {
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+      margin-top: var(--space-xs);
+    }
+    .speak-icon-btn {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: var(--background);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out);
+    }
+    .speak-icon-btn:hover {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    /* Alphabet Board */
+    .alpha-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      gap: var(--space-sm);
+      margin-block: var(--space-lg);
+    }
+    .alpha-btn {
+      min-height: 64px;
+      padding: var(--space-sm);
+      border-radius: var(--rounded-sm);
+      border: 0;
+      background-color: var(--surface-container-low);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out);
+    }
+    .alpha-btn:hover {
+      background-color: var(--primary-container);
+      transform: translateY(-2px);
+    }
+    .alpha-btn.active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .alpha-btn .letter {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .alpha-btn .sound {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1;
+    }
+    .alpha-btn.active .sound {
+      color: var(--on-primary);
+    }
+    .spell-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      min-height: 52px;
+      align-items: center;
+    }
+    .spell-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded-sm);
+      background-color: var(--surface-container-low);
+      min-width: 46px;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out);
+    }
+    .spell-chip.speaking {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      transform: translateY(-2px);
+    }
+    .spell-chip.speaking .spell-phonetic {
+      color: var(--on-primary);
+    }
+    .spell-phonetic {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Form Controls (Showroom inputs + always-visible labels) */
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .form-label {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface-variant);
+    }
+    .input-control,
+    .select-control {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-sm);
+      border: 1px solid var(--outline);
+      background-color: var(--background);
+      color: var(--on-surface);
+      width: 100%;
+      transition: border-color var(--dur-micro) var(--ease-out);
+    }
+    .select-control {
+      padding-right: var(--space-xl);
+    }
+    .input-control:focus,
+    .select-control:focus {
+      border-color: var(--primary);
+    }
+    .inline-form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: end;
+    }
+
+    /* Section 2: Dialogue & Steckbrief */
+    .dialogue-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .dialogue-turn {
+      background-color: var(--background);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+    .dialogue-turn.active-line {
+      background-color: var(--primary-container);
+    }
+    .speaker-badge {
+      display: inline-block;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: var(--space-xs);
+    }
+    .turn-de {
+      font-family: var(--font-headline);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .turn-zh {
+      font-size: 0.9375rem;
+      color: var(--on-surface-variant);
+      margin: var(--space-xs) 0 0;
+    }
+    .highlight-du {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: 0 var(--space-xs);
+      border-radius: var(--space-xs);
+    }
+    .highlight-sie {
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      padding: 0 var(--space-xs);
+      border-radius: var(--space-xs);
+    }
+
+    /* Clean Showroom Table */
+    .clean-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+    .clean-table th {
+      text-align: left;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-sm) var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .clean-table td {
+      padding: var(--space-md) var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    .clean-table tr:last-child td {
+      border-bottom: 0;
+    }
+    .clean-table tr.active-row td {
+      background-color: var(--primary-container);
+      color: var(--on-surface);
+    }
+
+    /* Section 3: Grammar Visualization */
+    .syntax-track {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr) minmax(0, 1.3fr);
+      gap: var(--space-md);
+      margin-block: var(--space-lg);
+    }
+    .syntax-slot {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .syntax-slot.verb-slot {
+      background-color: var(--primary-container);
+    }
+    .syntax-slot-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+    .syntax-slot.verb-slot .syntax-slot-label {
+      color: var(--on-primary-container);
+    }
+    .syntax-slot-word {
+      font-family: var(--font-headline);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-block: var(--space-xs);
+    }
+    .syntax-slot.verb-slot .syntax-slot-word {
+      color: var(--primary);
+    }
+    .syntax-slot-note {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-block: var(--space-md);
+    }
+    .word-tile {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-family: var(--font-headline);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out);
+    }
+    .word-tile:hover:not(:disabled) {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      transform: translateY(-1px);
+    }
+    .word-tile.placed {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .conjugation-stage {
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-lg);
+      text-align: center;
+      margin-block: var(--space-lg);
+    }
+    .morph-equation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      gap: var(--space-sm);
+      font-family: var(--font-headline);
+      font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+    .morph-pronoun {
+      color: var(--on-surface-variant);
+    }
+    .morph-stem {
+      color: var(--on-surface);
+    }
+    .morph-ending {
+      color: var(--primary);
+      background-color: var(--primary-container);
+      padding: 0 var(--space-sm);
+      border-radius: var(--rounded-sm);
+    }
+    .morph-ending.irregular {
+      color: var(--on-secondary-container);
+      background-color: var(--secondary-container);
+    }
+
+    /* Section 4: Quiz System */
+    .quiz-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .quiz-question-text {
+      font-family: var(--font-headline);
+      font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--on-surface);
+      margin: var(--space-md) 0 var(--space-lg);
+    }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .quiz-option-btn {
+      min-height: 56px;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded-sm);
+      border: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .quiz-option-btn:hover:not(:disabled) {
+      background-color: var(--primary-container);
+      transform: translateY(-1px);
+      box-shadow: var(--tile-shadow-hover);
+    }
+    .quiz-option-key {
+      width: 30px;
+      height: 30px;
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+    .quiz-option-btn.correct {
+      background-color: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .quiz-option-btn.correct .quiz-option-key {
+      background-color: var(--positive);
+      color: var(--on-positive);
+    }
+    .quiz-option-btn.wrong {
+      background-color: var(--error-container);
+      color: var(--on-error-container);
+    }
+    .quiz-option-btn.wrong .quiz-option-key {
+      background-color: var(--error);
+      color: var(--on-error);
+    }
+    .quiz-feedback {
+      margin-top: var(--space-lg);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded-sm);
+      background-color: var(--background);
+    }
+    .quiz-feedback.is-correct {
+      background-color: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .quiz-feedback.is-wrong {
+      background-color: var(--error-container);
+      color: var(--on-error-container);
+    }
+
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    .review-item {
+      background-color: var(--background);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+    }
+
+    .status-banner {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-sm);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-top: var(--space-md);
+    }
+    .status-banner.positive {
+      background-color: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .status-banner.error {
+      background-color: var(--error-container);
+      color: var(--on-error-container);
+    }
+    .status-banner.info {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Container Queries for adaptive inner cards */
+    .card-wrapper { container-type: inline-size; }
+    @container (min-width: 520px) {
+      .steckbrief-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-md);
+      }
+    }
+    @container (max-width: 519px) {
+      .steckbrief-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity var(--dur-long) var(--ease-out),
+                  transform var(--dur-long) var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      padding-block: var(--space-xl);
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+    }
+
+    /* Mobile Breakpoint */
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: var(--space-md);
+      }
+      .band {
+        padding-block: var(--space-xl);
+      }
+      .card-grid-4,
+      .card-grid-2,
+      .split-asymmetric,
+      .syntax-track,
+      .quiz-options {
+        grid-template-columns: 1fr;
+      }
+      .nav-status {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+      .flashcard {
+        min-height: 360px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero & Chapter Overview -->
+  <header class="band">
+    <div class="container">
+      <div class="headline-stack">
+        <span class="eyebrow">Berliner Platz 1 NEU · Kapitel 1</span>
+        <h1>Hallo! 德語入門互動課室</h1>
+        <p class="lede">
+          從打招呼、認識姓名與國籍，到掌握德語限定動詞第二順位與現在式變位——透過互動閃卡、真實課本對話、文法視覺化工具與 24 題隨機題庫，一次打好德語 A1 基礎。
+        </p>
+        <div class="action-row">
+          <a href="#section-vocab" class="btn-primary">開始第一章學習</a>
+          <a href="#section-quiz" class="link-more">直接挑戰 10 題隨機測驗</a>
+        </div>
+      </div>
+
+      <div class="card-grid-4" aria-label="本章學習內容概覽">
+        <div class="tile figure">
+          <div class="label">互動字彙與字母</div>
+          <div class="value">36 + 30</div>
+          <div class="caption">分類閃卡與德語字母拼讀</div>
+        </div>
+        <div class="tile figure">
+          <div class="label">課本情境對話</div>
+          <div class="value">4 組</div>
+          <div class="caption">正式 Sie 與非正式 du 對照</div>
+        </div>
+        <div class="tile figure">
+          <div class="label">文法視覺化模組</div>
+          <div class="value">3 套</div>
+          <div class="caption">語序軌道 · W-疑問詞 · 變位矩陣</div>
+        </div>
+        <div class="tile figure">
+          <div class="label">升級版隨機題庫</div>
+          <div class="value">24 題</div>
+          <div class="caption">每次抽 10 題並洗牌選項</div>
+        </div>
+      </div>
+
+      <nav class="chapter-nav" aria-label="章節快速導覽">
+        <a href="#section-vocab" class="nav-pill">01 單字與閃卡</a>
+        <a href="#section-dialogue" class="nav-pill">02 對話與自介</a>
+        <a href="#section-grammar" class="nav-pill">03 文法視覺化</a>
+        <a href="#section-quiz" class="nav-pill">04 隨機抽題測驗</a>
+        <div class="nav-status" id="global-progress-pill" aria-live="polite">
+          已熟記 0/36 詞彙 · 最高測驗 0/10
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Section 1: Vocabulary & Alphabet -->
+    <section id="section-vocab" class="band alt">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <span class="eyebrow">01 · 單字庫與字母拼讀</span>
+          <h2>打招呼、國籍語言與德語字母</h2>
+          <p class="lede">
+            點選分類切換第一章核心詞彙，點擊閃卡翻面檢視中文釋義與例句，並使用德語發音功能（de-DE）與字母拼讀機練習拼出姓名。
+          </p>
+        </div>
+
+        <!-- 1A. Flashcard Studio -->
+        <div class="tile reveal">
+          <div class="quiz-topbar">
+            <div>
+              <h3 class="tile-title">互動翻轉閃卡</h3>
+              <p class="tile-subtitle" style="margin-bottom: 0;">支援鍵盤操作：空白鍵翻面，左右方向鍵切換上一張／下一張</p>
+            </div>
+            <div class="pill-group">
+              <button type="button" class="filter-pill" id="toggle-unmastered-btn" onclick="toggleUnmasteredOnly()">只看待複習</button>
+              <button type="button" class="btn-secondary" onclick="shuffleFlashcards()">洗牌順序</button>
+            </div>
+          </div>
+
+          <div class="pill-group" id="vocab-category-filters" role="group" aria-label="單字分類篩選">
+            <button type="button" class="filter-pill active" data-cat="all" onclick="setVocabCategory('all')">全部 (36)</button>
+            <button type="button" class="filter-pill" data-cat="greeting" onclick="setVocabCategory('greeting')">打招呼與告別 (11)</button>
+            <button type="button" class="filter-pill" data-cat="country" onclick="setVocabCategory('country')">國家與城市 (12)</button>
+            <button type="button" class="filter-pill" data-cat="language" onclick="setVocabCategory('language')">語言名稱 (8)</button>
+            <button type="button" class="filter-pill" data-cat="profile" onclick="setVocabCategory('profile')">個人資料與職業 (5)</button>
+          </div>
+
+          <div class="flashcard-stage">
+            <div class="flashcard" id="flashcard-el" tabindex="0" role="button" aria-label="翻轉單字閃卡" onclick="flipFlashcard()" onkeydown="handleFlashcardKey(event)">
+              <div class="flashcard-face front">
+                <div class="flashcard-top">
+                  <span class="chip" id="fc-category-badge">打招呼與告別</span>
+                  <span class="chip neutral" id="fc-mastery-badge">待複習</span>
+                </div>
+                <div class="flashcard-center">
+                  <p class="flashcard-de" id="fc-de">Guten Tag.</p>
+                  <p class="flashcard-meta" id="fc-meta">日間正式問候</p>
+                </div>
+                <div class="flashcard-bottom">
+                  <button type="button" class="btn-secondary" onclick="speakFlashcard(event)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                    聽德語發音
+                  </button>
+                  <span class="form-label">點擊卡片任何位置翻面</span>
+                </div>
+              </div>
+
+              <div class="flashcard-face back">
+                <div class="flashcard-top">
+                  <span class="chip" id="fc-category-badge-back">打招呼與告別</span>
+                  <span class="chip neutral" id="fc-counter-back">1 / 36</span>
+                </div>
+                <div class="flashcard-center">
+                  <p class="flashcard-zh" id="fc-zh">您好／日安</p>
+                  <div class="flashcard-example">
+                    <div class="form-label">課本例句與筆記</div>
+                    <div id="fc-example" style="margin-top: var(--space-xs); font-weight: 500;">Guten Tag, Herr Berger.</div>
+                    <div id="fc-note" style="margin-top: var(--space-xs); color: var(--on-surface-variant); font-size: 0.875rem;">用於白天對老師、陌生人或職場對象的正式問候。</div>
+                  </div>
+                </div>
+                <div class="flashcard-bottom">
+                  <button type="button" class="btn-primary" id="fc-master-btn" onclick="toggleMasterCurrent(event)">標記為已熟記</button>
+                  <span class="form-label">點擊翻回正面</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="fc-progress-bar" style="width: 3%;"></div>
+          </div>
+
+          <div class="action-row" style="margin-top: var(--space-md); justify-content: space-between;">
+            <button type="button" class="btn-secondary" onclick="prevFlashcard()">上一張</button>
+            <span id="fc-counter" style="font-weight: 600; font-variant-numeric: tabular-nums;">第 1 / 36 張</span>
+            <button type="button" class="btn-primary" onclick="nextFlashcard()">下一張</button>
+          </div>
+        </div>
+
+        <!-- 1B. Searchable Quick Vocabulary List -->
+        <div class="tile reveal" style="margin-top: var(--space-lg);">
+          <div class="quiz-topbar">
+            <div>
+              <h3 class="tile-title">單字庫總覽與搜尋</h3>
+              <p class="tile-subtitle" style="margin-bottom: 0;">即時篩選目前分類中的單字，點擊右側喇叭按鈕立即試聽發音</p>
+            </div>
+            <div class="form-field" style="min-width: 240px;">
+              <label class="form-label" for="vocab-search-input">搜尋德語或中文關鍵字</label>
+              <input id="vocab-search-input" type="text" class="input-control" placeholder="例如：Türkei, 問候, 老師" oninput="renderVocabList()">
+            </div>
+          </div>
+          <div class="vocab-list-grid" id="vocab-list-container"></div>
+        </div>
+
+        <!-- 1C. Alphabet & Spelling Trainer -->
+        <div class="tile reveal" style="margin-top: var(--space-lg);">
+          <h3 class="tile-title">德語字母表與姓名拼讀機（Das Alphabet）</h3>
+          <p class="tile-subtitle">
+            收錄 26 個基本字母與德語特殊字元 Ä、Ö、Ü、ß（Eszett）。點擊任一字母聆聽標準讀音，或輸入名字體驗課本 1/9b 節奏拼讀。
+          </p>
+
+          <div class="alpha-grid" id="alpha-grid"></div>
+
+          <div style="background-color: var(--surface-container-low); border-radius: var(--rounded-sm); padding: var(--space-lg); margin-top: var(--space-md);">
+            <div class="inline-form-row">
+              <div class="form-field" style="flex: 1 1 240px;">
+                <label class="form-label" for="spell-input">輸入想拼讀的德語姓氏或名字（支援 Ä Ö Ü ß）</label>
+                <input id="spell-input" type="text" class="input-control" value="Kowalska" oninput="renderSpellingPreview()">
+              </div>
+              <button type="button" class="btn-primary" onclick="playSpellingSequence()">逐字拼讀播放</button>
+              <button type="button" class="btn-secondary" onclick="stopSpeaking()">停止</button>
+            </div>
+            <div class="pill-group" style="margin-top: var(--space-sm);">
+              <span class="form-label">課本人物姓氏快選：</span>
+              <button type="button" class="filter-pill" onclick="setSpellPreset('Kowalska')">Kowalska</button>
+              <button type="button" class="filter-pill" onclick="setSpellPreset('Korkmaz')">Korkmaz</button>
+              <button type="button" class="filter-pill" onclick="setSpellPreset('Sánchez')">Sánchez</button>
+              <button type="button" class="filter-pill" onclick="setSpellPreset('Müller')">Müller</button>
+              <button type="button" class="filter-pill" onclick="setSpellPreset('Weiß')">Weiß</button>
+            </div>
+            <div class="spell-strip" id="spell-preview-strip" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Dialogues & Self-Introduction -->
+    <section id="section-dialogue" class="band">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <span class="eyebrow">02 · 基礎對話與句型互動</span>
+          <h2>自我介紹與正式／非正式稱呼切換</h2>
+          <p class="lede">
+            掌握「你（du）」與「您（Sie）」的切換是德語社交關鍵。選擇課本情境逐句聆聽，再用個人名片工具打造你的第一段德語介紹。
+          </p>
+        </div>
+
+        <!-- 2A. Interactive Textbook Dialogues -->
+        <div class="split-asymmetric reveal">
+          <div class="tile">
+            <div class="quiz-topbar">
+              <div class="segmented-track" id="dialogue-tabs" role="tablist" aria-label="課本情境對話選擇">
+                <button type="button" class="segmented-btn active" data-dlg="0" onclick="selectDialogue(0)">1. 同學見面 (du)</button>
+                <button type="button" class="segmented-btn" data-dlg="1" onclick="selectDialogue(1)">2. 商務問候 (Sie)</button>
+                <button type="button" class="segmented-btn" data-dlg="2" onclick="selectDialogue(2)">3. 晚間自介 (Sie)</button>
+                <button type="button" class="segmented-btn" data-dlg="3" onclick="selectDialogue(3)">4. 介紹他人 (er/sie)</button>
+              </div>
+            </div>
+
+            <div class="pill-group" style="margin-bottom: var(--space-md); justify-content: space-between;">
+              <span class="chip" id="dlg-register-chip">非正式場合 · du</span>
+              <div class="pill-group">
+                <button type="button" class="filter-pill active" id="dlg-zh-toggle" onclick="toggleDialogueZh()">顯示中文翻譯</button>
+                <button type="button" class="btn-primary" onclick="playFullDialogue()">朗讀整段對話</button>
+              </div>
+            </div>
+
+            <div class="dialogue-list" id="dialogue-lines-container"></div>
+          </div>
+
+          <!-- Formal vs Informal Reference Card -->
+          <div class="tile">
+            <h3 class="tile-title">「du」與「Sie」關鍵對照表</h3>
+            <p class="tile-subtitle">點選右側對照句型，比較私下場合與正式場合的問法差異</p>
+            <table class="clean-table">
+              <thead>
+                <tr>
+                  <th>溝通目的</th>
+                  <th>非正式（du）</th>
+                  <th>正式（Sie）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>打招呼</td>
+                  <td><span class="de-word">Hallo! / Tag!</span></td>
+                  <td><span class="de-word">Guten Tag.</span></td>
+                </tr>
+                <tr>
+                  <td>問姓名</td>
+                  <td><span class="de-word">Wie heißt du?</span></td>
+                  <td><span class="de-word">Wie heißen Sie?</span></td>
+                </tr>
+                <tr>
+                  <td>問姓氏／稱呼</td>
+                  <td><span class="de-word">Wie ist dein Name?</span></td>
+                  <td><span class="de-word">Wie ist Ihr Name?</span></td>
+                </tr>
+                <tr>
+                  <td>問來自何處</td>
+                  <td><span class="de-word">Woher kommst du?</span></td>
+                  <td><span class="de-word">Woher kommen Sie?</span></td>
+                </tr>
+                <tr>
+                  <td>問居住地</td>
+                  <td><span class="de-word">Wo wohnst du?</span></td>
+                  <td><span class="de-word">Wo wohnen Sie?</span></td>
+                </tr>
+                <tr>
+                  <td>道別</td>
+                  <td><span class="de-word">Tschüs!</span></td>
+                  <td><span class="de-word">Auf Wiedersehen.</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="status-banner info">
+              小提醒：稱呼「您（Sie）」及所有格「您的（Ihr）」在德語中無論位於句首或句中，首字母永遠必須大寫。
+            </div>
+          </div>
+        </div>
+
+        <!-- 2B. Roleplay Practice & Personal Steckbrief Builder -->
+        <div class="card-grid-2 reveal" style="margin-top: var(--space-lg);">
+          <!-- Mini Roleplay Challenge -->
+          <div class="tile">
+            <div class="quiz-topbar">
+              <div>
+                <h3 class="tile-title">對話接龍演練</h3>
+                <p class="tile-subtitle" style="margin-bottom: 0;">根據對方的語氣（du 或 Sie）選出最適合的德語回應</p>
+              </div>
+              <button type="button" class="btn-secondary" onclick="resetRoleplay()">換下一題</button>
+            </div>
+
+            <div style="background-color: var(--background); border-radius: var(--rounded-sm); padding: var(--space-md);">
+              <span class="chip secondary" id="rp-context-tag">情境 A · 正式場合</span>
+              <p class="turn-de" id="rp-prompt-de" style="margin-top: var(--space-sm);">Guten Tag, mein Name ist Wohlfahrt. Wie heißen Sie?</p>
+              <p class="turn-zh" id="rp-prompt-zh">您好，我姓 Wohlfahrt。請問您貴姓大名？</p>
+            </div>
+
+            <div class="dialogue-list" id="rp-options-list" style="margin-top: var(--space-md);"></div>
+            <div id="rp-feedback-box"></div>
+          </div>
+
+          <!-- Personal Steckbrief Generator -->
+          <div class="tile card-wrapper">
+            <h3 class="tile-title">我的德語個人檔案（Mein Steckbrief）</h3>
+            <p class="tile-subtitle">輸入你的資料，即時組合出課本第 13 頁標準格式的自我介紹</p>
+
+            <div class="steckbrief-grid">
+              <div class="form-field">
+                <label class="form-label" for="sb-anrede">稱謂與語氣（Anrede）</label>
+                <select id="sb-anrede" class="select-control" onchange="updateSteckbrief()">
+                  <option value="Frau|Sie">Frau（女士 · 正式 Sie）</option>
+                  <option value="Herr|Sie">Herr（先生 · 正式 Sie）</option>
+                  <option value="du|du">一般同學介紹（非正式 du）</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="sb-vorname">名字（Vorname）</label>
+                <input id="sb-vorname" type="text" class="input-control" value="Yi-Chun" oninput="updateSteckbrief()">
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="sb-nachname">姓氏（Familienname）</label>
+                <input id="sb-nachname" type="text" class="input-control" value="Lin" oninput="updateSteckbrief()">
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="sb-land">來自國家（Land）</label>
+                <select id="sb-land" class="select-control" onchange="updateSteckbrief()">
+                  <option value="Taiwan">Taiwan（台灣）</option>
+                  <option value="Japan">Japan（日本）</option>
+                  <option value="Korea">Korea（韓國）</option>
+                  <option value="Deutschland">Deutschland（德國）</option>
+                  <option value="der Türkei">die Türkei（土耳其 → aus der Türkei）</option>
+                  <option value="der Ukraine">die Ukraine（烏克蘭 → aus der Ukraine）</option>
+                  <option value="Spanien">Spanien（西班牙）</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="sb-stadt">居住城市（Stadt）</label>
+                <input id="sb-stadt" type="text" class="input-control" value="Taipei" oninput="updateSteckbrief()">
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="sb-sprachen">會說的語言（Sprachen）</label>
+                <input id="sb-sprachen" type="text" class="input-control" value="Chinesisch, Englisch und Deutsch" oninput="updateSteckbrief()">
+              </div>
+            </div>
+
+            <div style="background-color: var(--background); border-radius: var(--rounded-sm); padding: var(--space-md); margin-top: var(--space-md);">
+              <div class="quiz-topbar" style="margin-bottom: var(--space-xs);">
+                <span class="chip positive">即時生成自我介紹</span>
+                <button type="button" class="btn-ghost" onclick="speakSteckbrief()">朗讀介紹</button>
+              </div>
+              <p id="sb-output-de" class="de-word" style="font-weight: 600; margin: var(--space-xs) 0;"></p>
+              <p id="sb-output-zh" style="color: var(--on-surface-variant); font-size: 0.875rem; margin: 0;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Grammar Visualization Tools -->
+    <section id="section-grammar" class="band alt">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <span class="eyebrow">03 · 文法視覺化工具</span>
+          <h2>語序軌道、W-疑問詞與動詞現在式變位</h2>
+          <p class="lede">
+            在德語陳述句與 W-疑問句中，限定動詞永遠鎖定在「第二順位（Position 2）」。動手切換句型、疑問詞與主詞，直接看見結構如何變化。
+          </p>
+        </div>
+
+        <!-- 3A. Sentence Structure & Word Order Track -->
+        <div class="tile reveal">
+          <div class="quiz-topbar">
+            <div>
+              <h3 class="tile-title">工具 1：語序軌道視覺化（Aussagesatz &amp; W-Frage）</h3>
+              <p class="tile-subtitle" style="margin-bottom: 0;">觀察限定動詞如何始終穩坐 Position 2</p>
+            </div>
+            <div class="segmented-track" role="tablist" aria-label="句型切換">
+              <button type="button" class="segmented-btn active" id="mode-aussage" onclick="setSyntaxMode('aussage')">陳述句 Aussagesatz</button>
+              <button type="button" class="segmented-btn" id="mode-wfrage" onclick="setSyntaxMode('wfrage')">W-疑問句 W-Frage</button>
+            </div>
+          </div>
+
+          <div class="pill-group" id="syntax-presets" style="margin-top: var(--space-md);"></div>
+
+          <div class="syntax-track" aria-live="polite">
+            <div class="syntax-slot">
+              <span class="syntax-slot-label" id="slot-1-label">Position 1 · 主詞</span>
+              <div class="syntax-slot-word" id="slot-1-word">Ich</div>
+              <span class="syntax-slot-note" id="slot-1-note">句首主題或提問起點</span>
+            </div>
+            <div class="syntax-slot verb-slot">
+              <span class="syntax-slot-label">Position 2 · 限定動詞 (鎖定!)</span>
+              <div class="syntax-slot-word" id="slot-2-word">heiße</div>
+              <span class="syntax-slot-note" id="slot-2-note">依主詞人稱變化詞尾</span>
+            </div>
+            <div class="syntax-slot">
+              <span class="syntax-slot-label">Position 3+ · 補充資訊</span>
+              <div class="syntax-slot-word" id="slot-3-word">Yong-Min.</div>
+              <span class="syntax-slot-note" id="slot-3-note">姓名、來自處或回答焦點</span>
+            </div>
+          </div>
+
+          <!-- Interactive Word Order Scramble Exercise (Textbook 1/5b) -->
+          <div style="background-color: var(--surface-container-low); border-radius: var(--rounded-sm); padding: var(--space-lg); margin-top: var(--space-md);">
+            <div class="quiz-topbar" style="margin-bottom: var(--space-sm);">
+              <div>
+                <span class="chip secondary">課本 1/5b 排句挑戰</span>
+                <span id="scramble-counter" style="margin-left: var(--space-sm); font-size: var(--label-size); color: var(--on-surface-variant);">第 1 / 6 題</span>
+              </div>
+              <div class="pill-group">
+                <button type="button" class="btn-secondary" onclick="clearScramble()">清空重排</button>
+                <button type="button" class="btn-primary" onclick="nextScramble()">下一題</button>
+              </div>
+            </div>
+            <p id="scramble-hint" style="margin: 0 0 var(--space-sm); font-weight: 500;">目標中文意思：請問您從哪裡來？</p>
+            <div class="word-bank" id="scramble-answer-zone" aria-label="已排列的單字" style="min-height: 52px; padding: var(--space-sm); background-color: var(--background); border-radius: var(--rounded-sm);"></div>
+            <div class="word-bank" id="scramble-pool" aria-label="可點選單字卡"></div>
+            <div id="scramble-feedback"></div>
+          </div>
+        </div>
+
+        <!-- 3B & 3C Grid: W-Question Radar + Conjugation Matrix -->
+        <div class="split-asymmetric reveal" style="margin-top: var(--space-lg);">
+          <!-- 3C: Verb Conjugation Matrix -->
+          <div class="tile">
+            <h3 class="tile-title">工具 2：動詞現在式人稱變位矩陣</h3>
+            <p class="tile-subtitle">點選不同動詞與人稱，即時拆解「字幹 + 字尾」與特殊母音變化</p>
+
+            <div class="pill-group" id="conj-verb-tabs" style="margin-bottom: var(--space-sm);">
+              <button type="button" class="filter-pill active" data-verb="kommen" onclick="selectVerb('kommen')">kommen (來)</button>
+              <button type="button" class="filter-pill" data-verb="heißen" onclick="selectVerb('heißen')">heißen (名叫)</button>
+              <button type="button" class="filter-pill" data-verb="sprechen" onclick="selectVerb('sprechen')">sprechen (說)</button>
+              <button type="button" class="filter-pill" data-verb="sein" onclick="selectVerb('sein')">sein (是)</button>
+              <button type="button" class="filter-pill" data-verb="wohnen" onclick="selectVerb('wohnen')">wohnen (住)</button>
+            </div>
+
+            <div class="pill-group" id="conj-pronoun-tabs">
+              <button type="button" class="segmented-btn active" style="background-color: var(--surface-container-low);" data-pro="ich" onclick="selectPronoun('ich')">ich (我)</button>
+              <button type="button" class="segmented-btn" style="background-color: var(--surface-container-low);" data-pro="du" onclick="selectPronoun('du')">du (你)</button>
+              <button type="button" class="segmented-btn" style="background-color: var(--surface-container-low);" data-pro="er" onclick="selectPronoun('er')">er / es / sie (他/它/她)</button>
+              <button type="button" class="segmented-btn" style="background-color: var(--surface-container-low);" data-pro="Sie" onclick="selectPronoun('Sie')">Sie (您)</button>
+            </div>
+
+            <div class="conjugation-stage" aria-live="polite">
+              <div class="morph-equation">
+                <span class="morph-pronoun" id="conj-pro-display">ich</span>
+                <span class="morph-stem" id="conj-stem-display">komm</span><span class="morph-ending" id="conj-end-display">-e</span>
+              </div>
+              <div id="conj-example-display" style="font-weight: 500; margin-bottom: var(--space-xs);">Ich komme aus Korea.</div>
+              <div id="conj-rule-note" style="font-size: var(--label-size); color: var(--on-surface-variant);">規則動詞：ich 固定字尾為 -e。</div>
+            </div>
+
+            <table class="clean-table" aria-label="完整人稱變位表">
+              <thead>
+                <tr>
+                  <th>人稱代名詞</th>
+                  <th>變位形式</th>
+                  <th>標準字尾</th>
+                </tr>
+              </thead>
+              <tbody id="conj-table-body"></tbody>
+            </table>
+          </div>
+
+          <!-- 3B: W-Question Word Radar -->
+          <div class="tile">
+            <h3 class="tile-title">工具 3：W-疑問詞對照雷達</h3>
+            <p class="tile-subtitle">點擊 5 個核心疑問詞，快速分辨提問焦點與搭配介系詞</p>
+
+            <div class="pill-group" id="w-word-pills" style="margin-bottom: var(--space-md);">
+              <button type="button" class="filter-pill active" data-w="Wer" onclick="selectWWord('Wer')">Wer?</button>
+              <button type="button" class="filter-pill" data-w="Wie" onclick="selectWWord('Wie')">Wie?</button>
+              <button type="button" class="filter-pill" data-w="Woher" onclick="selectWWord('Woher')">Woher?</button>
+              <button type="button" class="filter-pill" data-w="Was" onclick="selectWWord('Was')">Was?</button>
+              <button type="button" class="filter-pill" data-w="Wo" onclick="selectWWord('Wo')">Wo?</button>
+            </div>
+
+            <div style="background-color: var(--surface-container-low); border-radius: var(--rounded-sm); padding: var(--space-lg);">
+              <span class="chip" id="w-focus-chip">詢問「人物」</span>
+              <h4 class="de-word" id="w-title" style="font-size: 1.5rem; margin: var(--space-sm) 0 var(--space-xs);">Wer? — 誰？</h4>
+              <p id="w-desc" style="color: var(--on-surface-variant); margin: 0 0 var(--space-md);">用來詢問動作的主體人物，動詞通常配合第三人稱單數（er/es/sie 形式）。</p>
+
+              <div style="background-color: var(--background); border-radius: var(--rounded-sm); padding: var(--space-md); margin-bottom: var(--space-sm);">
+                <div class="form-label">問句範例</div>
+                <div class="de-word" id="w-q-de" style="font-weight: 600; margin-top: var(--space-xs);">Wer kommt aus Spanien?</div>
+                <div id="w-q-zh" style="font-size: 0.875rem; color: var(--on-surface-variant);">誰來自西班牙？</div>
+              </div>
+
+              <div style="background-color: var(--background); border-radius: var(--rounded-sm); padding: var(--space-md);">
+                <div class="form-label">標準答句</div>
+                <div class="de-word" id="w-a-de" style="font-weight: 600; margin-top: var(--space-xs);">Carlos Sánchez kommt aus Spanien.</div>
+                <div id="w-a-zh" style="font-size: 0.875rem; color: var(--on-surface-variant);">Carlos Sánchez 來自西班牙。</div>
+              </div>
+
+              <div class="status-banner info" id="w-tip">
+                搭配提示：Woher（從哪裡來）必搭 aus；Wo（住在哪裡）必搭 in。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Randomized 24-Question Quiz Engine -->
+    <section id="section-quiz" class="band">
+      <div class="container">
+        <div class="headline-stack reveal">
+          <span class="eyebrow">04 · 升級版隨堂測驗</span>
+          <h2>隨機抽題系統：24 題大題庫抽 10 題</h2>
+          <p class="lede">
+            題庫涵蓋問候語、正式與非正式稱謂、W-疑問詞、國家介系詞、動詞變位與語序。每次作答皆隨機抽取 10 題，並將所有選項順序重新洗牌。
+          </p>
+        </div>
+
+        <div class="tile reveal" id="quiz-container">
+          <!-- Active Question View -->
+          <div id="quiz-active-view">
+            <div class="quiz-topbar">
+              <div class="pill-group">
+                <span class="chip" id="quiz-progress-chip">第 1 / 10 題</span>
+                <span class="chip neutral" id="quiz-topic-chip">問候語</span>
+                <span class="chip positive" id="quiz-score-chip">目前得分：0</span>
+              </div>
+              <button type="button" class="btn-secondary" id="quiz-restart-btn" onclick="restartQuizInline(this)">重新抽 10 題</button>
+            </div>
+
+            <div class="progress-track" aria-hidden="true">
+              <div class="progress-fill" id="quiz-progress-bar" style="width: 10%;"></div>
+            </div>
+
+            <p class="quiz-question-text" id="quiz-question-prompt">載入題目中…</p>
+
+            <div class="quiz-options" id="quiz-options-grid"></div>
+
+            <div id="quiz-feedback-area" aria-live="polite"></div>
+
+            <div class="action-row" style="justify-content: space-between; margin-top: var(--space-lg);">
+              <span class="form-label" id="quiz-history-label">歷史最高成績：尚未完成測驗</span>
+              <button type="button" class="btn-primary" id="quiz-next-btn" onclick="nextQuizQuestion()" disabled>下一題</button>
+            </div>
+          </div>
+
+          <!-- Summary View -->
+          <div id="quiz-summary-view" style="display: none;">
+            <div class="headline-stack" style="padding-block: var(--space-md);">
+              <span class="eyebrow">測驗完成</span>
+              <h3 class="tile-title" id="quiz-final-verdict" style="font-size: var(--headline-size);">測驗結果</h3>
+              <p class="lede" id="quiz-final-sub" style="margin-top: var(--space-xs);"></p>
+            </div>
+
+            <div class="card-grid-4" style="margin-bottom: var(--space-xl);">
+              <div class="tile figure" style="background-color: var(--background);">
+                <div class="label">本次得分</div>
+                <div class="value" id="summary-score-val">0 / 10</div>
+                <div class="caption">共 10 題隨機題</div>
+              </div>
+              <div class="tile figure" style="background-color: var(--background);">
+                <div class="label">答對率</div>
+                <div class="value" id="summary-pct-val">0%</div>
+                <div class="caption">本章目標 80%+</div>
+              </div>
+              <div class="tile figure" style="background-color: var(--background);">
+                <div class="label">歷史最高分</div>
+                <div class="value" id="summary-best-val">0 / 10</div>
+                <div class="caption">跨次學習紀錄</div>
+              </div>
+              <div class="tile figure" style="background-color: var(--background);">
+                <div class="label">累計完成次數</div>
+                <div class="value" id="summary-attempts-val">0</div>
+                <div class="caption">每次抽題皆不重複順序</div>
+              </div>
+            </div>
+
+            <div id="summary-topic-breakdown" style="background-color: var(--background); border-radius: var(--rounded-sm); padding: var(--space-lg);"></div>
+
+            <div class="action-row">
+              <button type="button" class="btn-primary" onclick="startNewQuiz()">再抽 10 題重新挑戰</button>
+            </div>
+
+            <div class="review-list" id="summary-review-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="band alt">
+    <div class="container">
+      <p style="margin: 0;">
+        內容依據《Berliner Platz 1 NEU》Kapitel 1: Hallo! 課本、習作與德語文法參考資料整理編製。學習進度與測驗最高紀錄將自動保存。
+      </p>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    /* =====================================================================
+       DATA: Grounded in Berliner Platz 1 NEU - Kapitel 1: Hallo!
+       All strings use backticks to avoid unescaped apostrophe syntax errors.
+    ===================================================================== */
+
+    const VOCAB_DATA = [
+      // 1. Greetings & Farewells (11)
+      { id: `v1`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Guten Morgen.`, meta: `清晨至上午（正式／通用）`, zh: `早安`, ex: `Guten Morgen, Frau Kowalska!`, note: `通常用於早上至約上午 11 點之間。` },
+      { id: `v2`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Guten Tag.`, meta: `日間問候（正式／通用）`, zh: `您好／日安`, ex: `Guten Tag, Herr Berger. — Guten Tag, Frau Kraus.`, note: `最萬用的日間正式問候語。` },
+      { id: `v3`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Guten Abend.`, meta: `傍晚與夜間見面問候`, zh: `晚安（見面時）`, ex: `Guten Abend, ich bin Markus Schmeling.`, note: `傍晚約 18 點後與人見面時使用，非睡前道別。` },
+      { id: `v4`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Gute Nacht.`, meta: `睡前道別用語`, zh: `晚安（道別／睡前）`, ex: `Gute Nacht! Bis morgen.`, note: `僅在準備就寢或深夜道別時使用。` },
+      { id: `v5`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Hallo!`, meta: `非正式問候（du）`, zh: `哈囉！`, ex: `Hallo, Peter! — Tag, Erika.`, note: `用於朋友、同學、家人等使用 du 的對象。` },
+      { id: `v6`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Tag!`, meta: `口語簡短問候`, zh: `嗨！／你好！`, ex: `Tag, ich bin Olga.`, note: `Guten Tag 的口語簡稱，常見於熟人之間。` },
+      { id: `v7`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Auf Wiedersehen.`, meta: `正式道別（Sie）`, zh: `再見`, ex: `Auf Wiedersehen, Herr Sánchez!`, note: `直譯為「直到再相見」，用於正式場合。` },
+      { id: `v8`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Tschüs!`, meta: `非正式道別（du）`, zh: `掰掰！`, ex: `Tschüs, Carlos!`, note: `朋友或同學之間道別最常用的字眼。` },
+      { id: `v9`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Entschuldigung`, meta: `禮貌開場／打擾一下`, zh: `不好意思／請問`, ex: `Entschuldigung, wie heißen Sie?`, note: `在問問題或不小心打擾對方時使用。` },
+      { id: `v10`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Wie bitte?`, meta: `沒聽清楚請求重複`, zh: `不好意思，您說什麼？`, ex: `Wie bitte? — Schmeling, Markus Schmeling.`, note: `用於沒聽清對方的名字或句子，請對方再說一遍。` },
+      { id: `v11`, cat: `greeting`, catLabel: `打招呼與告別`, de: `Danke schön.`, meta: `禮貌致謝`, zh: `非常感謝`, ex: `Bitte buchstabieren Sie. — Danke schön.`, note: `拼完名字或獲得協助後的常用道謝語。` },
+
+      // 2. Countries & Cities (12)
+      { id: `v12`, cat: `country`, catLabel: `國家與城市`, de: `Deutschland`, meta: `中性國名（不加冠詞）· DE`, zh: `德國`, ex: `Ich wohne in Deutschland (Berlin, Dresden, München).`, note: `課本城市：Berlin, Dresden, München, Köln, Hamburg。` },
+      { id: `v13`, cat: `country`, catLabel: `國家與城市`, de: `Spanien`, meta: `中性國名 · ES`, zh: `西班牙`, ex: `Carlos Sánchez kommt aus Spanien, aus Valencia.`, note: `問「從哪裡來」用 aus Spanien。` },
+      { id: `v14`, cat: `country`, catLabel: `國家與城市`, de: `Korea`, meta: `中性國名 · KR`, zh: `韓國`, ex: `Yong-Min Kim kommt aus Korea, aus Seoul.`, note: `問「住在那裡」用 in Seoul。` },
+      { id: `v15`, cat: `country`, catLabel: `國家與城市`, de: `Russland`, meta: `中性國名 · RU`, zh: `俄羅斯`, ex: `Olga Minakova kommt aus Russland, aus Moskau.`, note: `首都為 Moskau（莫斯科）。` },
+      { id: `v16`, cat: `country`, catLabel: `國家與城市`, de: `die Türkei`, meta: `陰性國名（帶冠詞 die）· TR`, zh: `土耳其`, ex: `Mehmet Korkmaz kommt aus der Türkei, aus Izmir.`, note: `重要文法：陰性國名在 aus 之後必須變化為 aus der Türkei。` },
+      { id: `v17`, cat: `country`, catLabel: `國家與城市`, de: `die Ukraine`, meta: `陰性國名（帶冠詞 die）· UA`, zh: `烏克蘭`, ex: `Wiktor kommt aus der Ukraine, aus Kiew.`, note: `同屬陰性國名，必須說 aus der Ukraine。` },
+      { id: `v18`, cat: `country`, catLabel: `國家與城市`, de: `Polen`, meta: `中性國名 · PL`, zh: `波蘭`, ex: `Magdalena Kowalska kommt aus Polen, aus Łódź.`, note: `語言為 Polnisch。` },
+      { id: `v19`, cat: `country`, catLabel: `國家與城市`, de: `die Slowakei`, meta: `陰性國名（帶冠詞 die）· SK`, zh: `斯洛伐克`, ex: `Michael Kukan kommt aus der Slowakei, aus Bratislava.`, note: `陰性國名，搭配 aus der Slowakei。` },
+      { id: `v20`, cat: `country`, catLabel: `國家與城市`, de: `Brasilien`, meta: `中性國名 · BR`, zh: `巴西`, ex: `Mônica Nunes kommt aus Brasilien, aus Porto Alegre.`, note: `語言為 Portugiesisch。` },
+      { id: `v21`, cat: `country`, catLabel: `國家與城市`, de: `China`, meta: `中性國名 · CN`, zh: `中國`, ex: `Li Fan kommt aus China, aus Beijing.`, note: `語言為 Chinesisch。` },
+      { id: `v22`, cat: `country`, catLabel: `國家與城市`, de: `die Schweiz`, meta: `陰性國名（帶冠詞 die）· CH`, zh: `瑞士`, ex: `Ich komme aus der Schweiz, aus Basel.`, note: `與 Österreich（奧地利）、Deutschland 同屬德語區 D-A-CH。` },
+      { id: `v23`, cat: `country`, catLabel: `國家與城市`, de: `Österreich`, meta: `中性國名 · AT`, zh: `奧地利`, ex: `Wien liegt in Österreich.`, note: `首都為 Wien（維也納）。` },
+
+      // 3. Languages (8)
+      { id: `v24`, cat: `language`, catLabel: `語言名稱`, de: `Deutsch`, meta: `語言名詞（首字母大寫）`, zh: `德語`, ex: `Wer spricht Deutsch? — Ich spreche Deutsch.`, note: `語言名稱在德語中作名詞使用時必須大寫。` },
+      { id: `v25`, cat: `language`, catLabel: `語言名稱`, de: `Chinesisch`, meta: `語言名詞`, zh: `中文／漢語`, ex: `Yong-Min spricht Koreanisch und Chinesisch.`, note: `詞尾 -isch 是德語常見的語言與國籍形容詞結尾。` },
+      { id: `v26`, cat: `language`, catLabel: `語言名稱`, de: `Englisch`, meta: `語言名詞`, zh: `英語`, ex: `Olga spricht Russisch und Englisch.`, note: `搭配動詞 sprechen（du sprichst, er/sie spricht）。` },
+      { id: `v27`, cat: `language`, catLabel: `語言名稱`, de: `Spanisch`, meta: `語言名詞`, zh: `西班牙語`, ex: `Carlos spricht Spanisch und Französisch.`, note: `西班牙為 Spanien，語言為 Spanisch。` },
+      { id: `v28`, cat: `language`, catLabel: `語言名稱`, de: `Französisch`, meta: `語言名詞`, zh: `法語`, ex: `Er spricht Spanisch und Französisch.`, note: `注意 ö 的圓唇發音。` },
+      { id: `v29`, cat: `language`, catLabel: `語言名稱`, de: `Türkisch`, meta: `語言名詞`, zh: `土耳其語`, ex: `Mehmet spricht Türkisch und Persisch.`, note: `注意 ü 的圓唇發音。` },
+      { id: `v30`, cat: `language`, catLabel: `語言名稱`, de: `Russisch`, meta: `語言名詞`, zh: `俄語`, ex: `Sie spricht Ukrainisch und Russisch.`, note: `俄羅斯（Russland）的對應語言。` },
+      { id: `v31`, cat: `language`, catLabel: `語言名稱`, de: `Koreanisch`, meta: `語言名詞`, zh: `韓語`, ex: `Frau Kim spricht Koreanisch.`, note: `韓國（Korea）的對應語言。` },
+
+      // 4. Personal Profile & Professions (5)
+      { id: `v32`, cat: `profile`, catLabel: `個人資料與職業`, de: `der Vorname`, meta: `陽性名詞 · 複數 die Vornamen`, zh: `名字（名）`, ex: `Mein Vorname ist Yong-Min.`, note: `在名字表格中位於 Familienname 之前或之後，指的是個人名。` },
+      { id: `v33`, cat: `profile`, catLabel: `個人資料與職業`, de: `der Familienname`, meta: `陽性名詞 · 同義 der Nachname`, zh: `姓氏`, ex: `Familienname: Kowalska, Vorname: Magdalena.`, note: `正式稱呼「Herr / Frau + 姓氏」。` },
+      { id: `v34`, cat: `profile`, catLabel: `個人資料與職業`, de: `buchstabieren`, meta: `動詞 · Buchstabieren Sie bitte`, zh: `拼讀字母`, ex: `Bitte buchstabieren Sie Ihren Namen.`, note: `遇不熟悉的姓氏時，常請對方逐一唸出字母。` },
+      { id: `v35`, cat: `profile`, catLabel: `個人資料與職業`, de: `der Deutschlehrer`, meta: `職業名詞 · 女性為 die Deutschlehrerin`, zh: `德語老師`, ex: `Christoph Ulreich wohnt in München. Beruf: Deutschlehrer.`, note: `課本 1/11b 人物：Christoph Ulreich。` },
+      { id: `v36`, cat: `profile`, catLabel: `個人資料與職業`, de: `die Automechanikerin`, meta: `女性職業名詞（詞尾 -in）`, zh: `女性汽車修護技師`, ex: `Sandra Petri wohnt in Dresden. Beruf: Automechanikerin.`, note: `另見 Sekretärin（女秘書，Martina Keller，Berlin）。` }
+    ];
+
+    const ALPHABET_DATA = [
+      { l: `A`, p: `a`, say: `Ah` },
+      { l: `B`, p: `Be`, say: `Be` },
+      { l: `C`, p: `Ce`, say: `Ce` },
+      { l: `D`, p: `De`, say: `De` },
+      { l: `E`, p: `e`, say: `Eh` },
+      { l: `F`, p: `eF`, say: `eff` },
+      { l: `G`, p: `Ge`, say: `Ge` },
+      { l: `H`, p: `Ha`, say: `Ha` },
+      { l: `I`, p: `i`, say: `Ih` },
+      { l: `J`, p: `Jott`, say: `Jott` },
+      { l: `K`, p: `Ka`, say: `Ka` },
+      { l: `L`, p: `eL`, say: `ell` },
+      { l: `M`, p: `eM`, say: `emm` },
+      { l: `N`, p: `eN`, say: `enn` },
+      { l: `O`, p: `o`, say: `Oh` },
+      { l: `P`, p: `Pe`, say: `Pe` },
+      { l: `Q`, p: `Qu`, say: `Kuh` },
+      { l: `R`, p: `eR`, say: `err` },
+      { l: `S`, p: `eS`, say: `ess` },
+      { l: `T`, p: `Te`, say: `Te` },
+      { l: `U`, p: `u`, say: `Uh` },
+      { l: `V`, p: `Vau`, say: `Vau` },
+      { l: `W`, p: `We`, say: `We` },
+      { l: `X`, p: `iX`, say: `ix` },
+      { l: `Y`, p: `Ypsilon`, say: `Ypsilon` },
+      { l: `Z`, p: `Zet`, say: `Zett` },
+      { l: `Ä`, p: `ä (A-Umlaut)`, say: `Äh` },
+      { l: `Ö`, p: `ö (O-Umlaut)`, say: `Öh` },
+      { l: `Ü`, p: `ü (U-Umlaut)`, say: `Üh` },
+      { l: `ß`, p: `Eszett`, say: `Eszett` }
+    ];
+
+    const DIALOGUES_DATA = [
+      {
+        title: `Dialog 1 · 同學見面`,
+        chip: `非正式場合 · du（課本 1/4b）`,
+        isFormal: false,
+        lines: [
+          { speaker: `Yong-Min`, de: `Hallo.`, zh: `哈囉。` },
+          { speaker: `Olga`, de: `Tag, ich bin Olga.`, zh: `嗨，我是 Olga。` },
+          { speaker: `Yong-Min`, de: `Und ich heiße Yong-Min.`, zh: `而我叫 Yong-Min。` },
+          { speaker: `Olga`, de: `Entschuldigung, wie heißt du?`, zh: `不好意思，請問你叫什麼名字？` },
+          { speaker: `Yong-Min`, de: `Yong-Min. Ich bin aus Korea, und du?`, zh: `Yong-Min。我來自韓國，你呢？` },
+          { speaker: `Olga`, de: `Ich bin aus Russland.`, zh: `我來自俄羅斯。` }
+        ]
+      },
+      {
+        title: `Dialog 2 · 商務問候`,
+        chip: `正式場合 · Sie（課本 1/4b）`,
+        isFormal: true,
+        lines: [
+          { speaker: `Herr Sánchez`, de: `Guten Tag. Mein Name ist Sánchez.`, zh: `您好。我姓 Sánchez。` },
+          { speaker: `Herr Svoboda`, de: `Guten Tag, Herr Sánchez. Ich bin Adam Svoboda.`, zh: `您好，Sánchez 先生。我是 Adam Svoboda。` },
+          { speaker: `Herr Sánchez`, de: `Woher kommen Sie?`, zh: `請問您從哪裡來？` },
+          { speaker: `Herr Svoboda`, de: `Aus Pilsen. Und Sie?`, zh: `來自皮爾森。那您呢？` },
+          { speaker: `Herr Sánchez`, de: `Aus Valencia.`, zh: `來自瓦倫西亞。` }
+        ]
+      },
+      {
+        title: `Dialog 3 · 晚間自介`,
+        chip: `正式場合 · Sie（課本 1/4b）`,
+        isFormal: true,
+        lines: [
+          { speaker: `Frau Jacob`, de: `Guten Abend.`, zh: `晚安。` },
+          { speaker: `Herr Schmeling`, de: `Guten Abend, ich bin Markus Schmeling.`, zh: `晚安，我是 Markus Schmeling。` },
+          { speaker: `Frau Jacob`, de: `Entschuldigung, wie ist Ihr Name?`, zh: `不好意思，請問您貴姓？` },
+          { speaker: `Herr Schmeling`, de: `Schmeling, Markus Schmeling.`, zh: `Schmeling，Markus Schmeling。` },
+          { speaker: `Frau Jacob`, de: `Und ich bin Frau Jacob, Irene Jacob.`, zh: `我是 Jacob 女士，Irene Jacob。` }
+        ]
+      },
+      {
+        title: `Dialog 4 · 介紹他人`,
+        chip: `第三人稱 · er / sie（課本 1/6 & AB 7.1）`,
+        isFormal: false,
+        lines: [
+          { speaker: `Person A`, de: `Wer ist das?`, zh: `那是誰？` },
+          { speaker: `Person B`, de: `Das ist Mehmet Korkmaz.`, zh: `這是 Mehmet Korkmaz。` },
+          { speaker: `Person A`, de: `Woher kommt er?`, zh: `他從哪裡來？` },
+          { speaker: `Person B`, de: `Er kommt aus Izmir. Das liegt in der Türkei.`, zh: `他來自伊茲密爾。那裡位於土耳其。` },
+          { speaker: `Person A`, de: `Was spricht Mehmet?`, zh: `Mehmet 會說什麼語言？` },
+          { speaker: `Person B`, de: `Er spricht Türkisch und auch Persisch.`, zh: `他會說土耳其語，也會說波斯語。` }
+        ]
+      }
+    ];
+
+    const ROLEPLAY_SCENARIOS = [
+      {
+        tag: `情境 A · 正式場合（Sie）`,
+        promptDe: `Guten Tag. Mein Name ist Wohlfahrt. Wie heißen Sie?`,
+        promptZh: `您好。我姓 Wohlfahrt。請問您叫什麼名字？`,
+        options: [
+          { text: `Guten Tag, Frau Wohlfahrt. Ich bin Carlos Sánchez.`, correct: true, feedback: `正確！使用正式問候 Guten Tag 並以 Frau + 姓氏回應。` },
+          { text: `Hallo, Sabine! Ich bin Carlos.`, correct: false, feedback: `對方使用 Sie 並報上姓氏，直接叫名字與說 Hallo 過於隨意。` },
+          { text: `Ich komme aus Valencia.`, correct: false, feedback: `這句回答的是「從哪裡來（Woher）」，而不是「姓名（Wie）」。` }
+        ]
+      },
+      {
+        tag: `情境 B · 同學場合（du）`,
+        promptDe: `Hallo, ich bin Paul. Woher kommst du?`,
+        promptZh: `哈囉，我是 Paul。你從哪裡來？`,
+        options: [
+          { text: `Tag, Paul. Ich komme aus der Ukraine.`, correct: true, feedback: `正確！以友善的 Tag 回應，並用 aus der Ukraine 正確表達陰性國名。` },
+          { text: `Aus der Russland, und Sie?`, correct: false, feedback: `兩處錯誤：Russland 不加定冠詞 der，且 Paul 用 du，回問應用 und du?。` },
+          { text: `Mein Name ist Wiktor.`, correct: false, feedback: `對方問的是 Woher kommst du?（從哪裡來），不是問名字。` }
+        ]
+      },
+      {
+        tag: `情境 C · 詢問語言（er / sie）`,
+        promptDe: `Das ist Olga Minakova. Woher kommt sie und was spricht sie?`,
+        promptZh: `這是 Olga Minakova。她從哪裡來、會說什麼語言？`,
+        options: [
+          { text: `Sie kommt aus Russland. Sie spricht Russisch und Englisch.`, correct: true, feedback: `完全正確！第三人稱單數 sie 動詞字尾為 -t（kommt），sprechen 會母音變化為 spricht。` },
+          { text: `Er kommt aus Russland. Er sprecht Russisch.`, correct: false, feedback: `兩處錯誤：Olga 為女性應用 Sie；sprechen 在第三人稱單數須變音為 spricht。` },
+          { text: `Sie komme aus Moskau. Sie spreche Englisch.`, correct: false, feedback: `第三人稱單數 sie 的動詞字尾必須是 -t，而非 -e（-e 是 ich 的字尾）。` }
+        ]
+      }
+    ];
+
+    const SYNTAX_PRESETS = {
+      aussage: [
+        { p1: `Ich`, p2: `heiße`, p3: `Yong-Min.`, n1: `主詞第一人稱`, n2: `字尾 -e（heißen）`, n3: `名字` },
+        { p1: `Ich`, p2: `komme`, p3: `aus Korea.`, n1: `主詞第一人稱`, n2: `字尾 -e（kommen）`, n3: `aus + 國家` },
+        { p1: `Mein Name`, p2: `ist`, p3: `Sánchez.`, n1: `主詞名詞片語`, n2: `不規則動詞 sein（第三人稱）`, n3: `姓氏` },
+        { p1: `Frau Minakova`, p2: `spricht`, p3: `Russisch und Englisch.`, n1: `主詞第三人稱單數`, n2: `母音變音 e→i（sprechen）`, n3: `語言` }
+      ],
+      wfrage: [
+        { p1: `Wie`, p2: `heißen`, p3: `Sie?`, n1: `W-疑問詞（問姓名）`, n2: `尊稱 Sie 字尾 -en`, n3: `主詞倒裝至動詞後` },
+        { p1: `Woher`, p2: `kommst`, p3: `du?`, n1: `W-疑問詞（從何處）`, n2: `第二人稱 du 字尾 -st`, n3: `主詞倒裝至動詞後` },
+        { p1: `Wer`, p2: `kommt`, p3: `aus Spanien?`, n1: `W-疑問詞（誰，兼主詞）`, n2: `視同第三人稱單數 -t`, n3: `來自西班牙` },
+        { p1: `Wo`, p2: `wohnen`, p3: `Sie?`, n1: `W-疑問詞（在哪裡）`, n2: `尊稱 Sie 字尾 -en`, n3: `主詞在動詞後` }
+      ]
+    };
+
+    const SCRAMBLE_EXERCISES = [
+      { hint: `請問您從哪裡來？（課本 1/5b-1）`, words: [`Woher`, `kommen`, `Sie?`], answer: `Woher kommen Sie?` },
+      { hint: `您好，我叫 Mehmet。（課本 1/5b-2）`, words: [`Guten Tag,`, `ich`, `heiße`, `Mehmet.`], answer: `Guten Tag, ich heiße Mehmet.` },
+      { hint: `我的姓氏是 Sánchez。（課本 1/5b-3）`, words: [`Mein Name`, `ist`, `Sánchez.`], answer: `Mein Name ist Sánchez.` },
+      { hint: `請問您貴姓大名？（課本 1/5b-5）`, words: [`Wie`, `heißen`, `Sie?`], answer: `Wie heißen Sie?` },
+      { hint: `我來自韓國，那你呢？（課本 1/5b-8）`, words: [`Ich`, `bin`, `aus Korea,`, `und du?`], answer: `Ich bin aus Korea, und du?` },
+      { hint: `他會說土耳其語和波斯語。（課本 1/6a）`, words: [`Er`, `spricht`, `Türkisch`, `und Persisch.`], answer: `Er spricht Türkisch und Persisch.` }
+    ];
+
+    const CONJUGATION_DATA = {
+      kommen: {
+        infinitive: `kommen（來）`,
+        forms: {
+          ich: { stem: `komm`, end: `-e`, full: `komme`, irregular: false, ex: `Ich komme aus Korea.`, rule: `規則變化：字幹 komm + 字尾 -e。` },
+          du: { stem: `komm`, end: `-st`, full: `kommst`, irregular: false, ex: `Woher kommst du?`, rule: `規則變化：字幹 komm + 字尾 -st。` },
+          er: { stem: `komm`, end: `-t`, full: `kommt`, irregular: false, ex: `Frau Minakova kommt aus Russland.`, rule: `第三人稱單數（er/es/sie）固定字尾 -t。` },
+          Sie: { stem: `komm`, end: `-en`, full: `kommen`, irregular: false, ex: `Woher kommen Sie?`, rule: `尊稱 Sie 與原形不定詞相同，字尾為 -en。` }
+        }
+      },
+      heißen: {
+        infinitive: `heißen（名叫）`,
+        forms: {
+          ich: { stem: `heiß`, end: `-e`, full: `heiße`, irregular: false, ex: `Ich heiße Yong-Min.`, rule: `字幹 heiß + 字尾 -e。` },
+          du: { stem: `heiß`, end: `-t`, full: `heißt`, irregular: true, ex: `Wie heißt du?`, rule: `特別規則：字幹以 ß / s / z 結尾時，du 省略 s，只加 -t！` },
+          er: { stem: `heiß`, end: `-t`, full: `heißt`, irregular: false, ex: `Er heißt Mehmet Korkmaz.`, rule: `第三人稱單數：字幹 heiß + 字尾 -t（與 du 同形）。` },
+          Sie: { stem: `heiß`, end: `-en`, full: `heißen`, irregular: false, ex: `Wie heißen Sie?`, rule: `尊稱 Sie 字尾為 -en。` }
+        }
+      },
+      sprechen: {
+        infinitive: `sprechen（說語言）`,
+        forms: {
+          ich: { stem: `sprech`, end: `-e`, full: `spreche`, irregular: false, ex: `Ich spreche Koreanisch und Chinesisch.`, rule: `ich 的字幹不變音，維持 sprech + -e。` },
+          du: { stem: `sprich`, end: `-st`, full: `sprichst`, irregular: true, ex: `Was sprichst du?`, rule: `母音變化（e → i）：du 時字幹母音變成 sprich + -st！` },
+          er: { stem: `sprich`, end: `-t`, full: `spricht`, irregular: true, ex: `Sie spricht Russisch und Englisch.`, rule: `母音變化（e → i）：er / es / sie 同樣變為 sprich + -t！` },
+          Sie: { stem: `sprech`, end: `-en`, full: `sprechen`, irregular: false, ex: `Sprechen Sie Deutsch?`, rule: `尊稱 Sie 維持原形字幹 sprech + -en，不變音。` }
+        }
+      },
+      sein: {
+        infinitive: `sein（是，完全不規則）`,
+        forms: {
+          ich: { stem: ``, end: `bin`, full: `bin`, irregular: true, ex: `Hallo, ich bin Olga.`, rule: `完全不規則動詞：ich 搭配 bin。` },
+          du: { stem: ``, end: `bist`, full: `bist`, irregular: true, ex: `Bist du aus Spanien?`, rule: `完全不規則動詞：du 搭配 bist。` },
+          er: { stem: ``, end: `ist`, full: `ist`, irregular: true, ex: `Mein Name ist Sánchez.`, rule: `完全不規則動詞：er / es / sie 搭配 ist。` },
+          Sie: { stem: ``, end: `sind`, full: `sind`, irregular: true, ex: `Sind Sie Frau Wohlfahrt?`, rule: `完全不規則動詞：Sie 搭配 sind。` }
+        }
+      },
+      wohnen: {
+        infinitive: `wohnen（居住）`,
+        forms: {
+          ich: { stem: `wohn`, end: `-e`, full: `wohne`, irregular: false, ex: `Ich wohne in Berlin.`, rule: `規則變化：字幹 wohn + -e。` },
+          du: { stem: `wohn`, end: `-st`, full: `wohnst`, irregular: false, ex: `Wo wohnst du?`, rule: `規則變化：字幹 wohn + -st。` },
+          er: { stem: `wohn`, end: `-t`, full: `wohnt`, irregular: false, ex: `Sandra Petri wohnt in Dresden.`, rule: `規則變化：字幹 wohn + -t。` },
+          Sie: { stem: `wohn`, end: `-en`, full: `wohnen`, irregular: false, ex: `Wo wohnen Sie?`, rule: `尊稱 Sie 字尾為 -en。` }
+        }
+      }
+    };
+
+    const W_WORDS_DATA = {
+      Wer: {
+        focus: `詢問「人物」`,
+        title: `Wer? — 誰？`,
+        desc: `用來詢問人或主詞是誰。由於疑問詞本身可作為主詞，後方動詞通常使用第三人稱單數（-t / ist）。`,
+        qDe: `Wer kommt aus Spanien?`,
+        qZh: `誰來自西班牙？`,
+        aDe: `Carlos Sánchez kommt aus Spanien.`,
+        aZh: `Carlos Sánchez 來自西班牙。`,
+        tip: `例句：Wer ist das? — Das ist Mehmet Korkmaz.`
+      },
+      Wie: {
+        focus: `詢問「姓名 / 狀態 / 方式」`,
+        title: `Wie? — 什麼名字 / 如何？`,
+        desc: `英文常說 "What is your name?"，但德語詢問名字與姓氏一律使用 Wie（不是 Was）。`,
+        qDe: `Wie heißen Sie? / Wie ist Ihr Name?`,
+        qZh: `請問您叫什麼名字？／您貴姓？`,
+        aDe: `Ich heiße Olga Minakova.`,
+        aZh: `我叫 Olga Minakova。`,
+        tip: `重要對比：問名字用 Wie heißen Sie?，千萬別說 Was heißen Sie?。`
+      },
+      Woher: {
+        focus: `詢問「來源地 / 出身」`,
+        title: `Woher? — 從哪裡來？`,
+        desc: `詢問出身國家或城市，常搭配動詞 kommen 或 sein，回答時必須使用介系詞 aus。`,
+        qDe: `Woher kommst du?`,
+        qZh: `你從哪裡來？`,
+        aDe: `Ich komme aus Korea. / Aus der Türkei.`,
+        aZh: `我來自韓國。／來自土耳其。`,
+        tip: `注意陰性國名變化：die Türkei → aus der Türkei；die Ukraine → aus der Ukraine。`
+      },
+      Was: {
+        focus: `詢問「事物 / 語言」`,
+        title: `Was? — 什麼？`,
+        desc: `用來詢問具體事物或會說哪些語言，回答時直接接語言名詞（且語言首字母大寫）。`,
+        qDe: `Was sprichst du?`,
+        qZh: `你會說什麼語言？`,
+        aDe: `Ich spreche Estnisch und Englisch.`,
+        aZh: `我會說愛沙尼亞語和英語。`,
+        tip: `問語言也可以用 Yes/No 疑問句：Sprechen Sie Deutsch?`
+      },
+      Wo: {
+        focus: `詢問「目前所在地點」`,
+        title: `Wo? — 在哪裡？`,
+        desc: `詢問靜態的位置或居住地點（wohnen / liegen），回答時搭配介系詞 in。`,
+        qDe: `Wo wohnen Sie?`,
+        qZh: `請問您住在哪裡？`,
+        aDe: `Ich wohne in Athen. / Izmir liegt in der Türkei.`,
+        aZh: `我住在雅典。／伊茲密爾位於土耳其。`,
+        tip: `區辨：Woher（從哪裡來 → aus）vs. Wo（住在／位於哪裡 → in）。`
+      }
+    };
+
+    /* 24-Question Master Bank (Kapitel 1: Hallo!) */
+    const QUIZ_BANK = [
+      {
+        id: `q1`, topic: `問候語`,
+        prompt: `傍晚與新認識的德國朋友見面打招呼，應該說哪一句？`,
+        options: [
+          { text: `Guten Abend.`, correct: true },
+          { text: `Gute Nacht.`, correct: false },
+          { text: `Auf Wiedersehen.`, correct: false },
+          { text: `Wie bitte?`, correct: false }
+        ],
+        explanation: `Guten Abend 用於傍晚見面問候；Gute Nacht 則是用於睡前道別。`
+      },
+      {
+        id: `q2`, topic: `問候語`,
+        prompt: `與同學下課後用非正式語氣道別時，最自然的說法是什麼？`,
+        options: [
+          { text: `Tschüs!`, correct: true },
+          { text: `Auf Wiedersehen.`, correct: false },
+          { text: `Guten Morgen.`, correct: false },
+          { text: `Entschuldigung.`, correct: false }
+        ],
+        explanation: `Tschüs! 是非正式（du）的再見；Auf Wiedersehen 則是正式（Sie）道別。`
+      },
+      {
+        id: `q3`, topic: `問候語`,
+        prompt: `在對話中沒聽清楚對方的姓氏，想請對方再說一次，應該說？`,
+        options: [
+          { text: `Wie bitte?`, correct: true },
+          { text: `Danke schön.`, correct: false },
+          { text: `Guten Tag.`, correct: false },
+          { text: `Und du?`, correct: false }
+        ],
+        explanation: `Wie bitte? 意為「不好意思，請再說一次／您說什麼？」，課本 1/4b 與 1/5b 皆有出現。`
+      },
+      {
+        id: `q4`, topic: `正式與非正式`,
+        prompt: `在課堂上首次遇到德語老師 Frau Wohlfahrt，詢問對方姓名應該怎麼說？`,
+        options: [
+          { text: `Wie heißen Sie?`, correct: true },
+          { text: `Wie heißt du?`, correct: false },
+          { text: `Was heißen Sie?`, correct: false },
+          { text: `Woher heißen Sie?`, correct: false }
+        ],
+        explanation: `對老師或長輩使用尊稱 Sie，且問姓名要用疑問詞 Wie（Wie heißen Sie?）。`
+      },
+      {
+        id: `q5`, topic: `正式與非正式`,
+        prompt: `對同年齡的同學 Wiktor 詢問他從哪裡來，應該選擇哪一句？`,
+        options: [
+          { text: `Woher kommst du?`, correct: true },
+          { text: `Woher kommen Sie?`, correct: false },
+          { text: `Wo kommst du?`, correct: false },
+          { text: `Wie kommst du?`, correct: false }
+        ],
+        explanation: `對同學使用非正式 du，問「從哪裡來」用 Woher + kommst + du?。`
+      },
+      {
+        id: `q6`, topic: `W-疑問詞`,
+        prompt: `想詢問「那個人是誰？」，空格應填入哪個疑問詞：___ ist das?`,
+        options: [
+          { text: `Wer`, correct: true },
+          { text: `Wie`, correct: false },
+          { text: `Wo`, correct: false },
+          { text: `Was`, correct: false }
+        ],
+        explanation: `Wer? 用來詢問「誰（人物）」，例如：Wer ist das? — Das ist Mehmet Korkmaz.`
+      },
+      {
+        id: `q7`, topic: `W-疑問詞`,
+        prompt: `想詢問「您住在哪裡？」，正確的問句是？`,
+        options: [
+          { text: `Wo wohnen Sie?`, correct: true },
+          { text: `Woher wohnen Sie?`, correct: false },
+          { text: `Wie wohnen Sie?`, correct: false },
+          { text: `Was wohnen Sie?`, correct: false }
+        ],
+        explanation: `wohnen 表示靜態居住，搭配詢問地點的 Wo?，而非表示來源的 Woher?。`
+      },
+      {
+        id: `q8`, topic: `W-疑問詞`,
+        prompt: `想詢問對方「會說什麼語言？」，空格應填入：___ sprichst du?`,
+        options: [
+          { text: `Was`, correct: true },
+          { text: `Wie`, correct: false },
+          { text: `Wo`, correct: false },
+          { text: `Woher`, correct: false }
+        ],
+        explanation: `詢問「說什麼語言」使用 Was（什麼），例：Was sprichst du? — Spanisch.`
+      },
+      {
+        id: `q9`, topic: `國家與介系詞`,
+        prompt: `課本中 Mehmet Korkmaz 來自土耳其，正確的德語表達是？`,
+        options: [
+          { text: `Er kommt aus der Türkei.`, correct: true },
+          { text: `Er kommt aus Türkei.`, correct: false },
+          { text: `Er kommt in der Türkei.`, correct: false },
+          { text: `Er kommt aus dem Türkei.`, correct: false }
+        ],
+        explanation: `die Türkei 為陰性國名，在介系詞 aus 之後必須變化為 aus der Türkei。`
+      },
+      {
+        id: `q10`, topic: `國家與介系詞`,
+        prompt: `同學 Wiktor 來自烏克蘭，下列哪一句完全正確？`,
+        options: [
+          { text: `Er kommt aus der Ukraine.`, correct: true },
+          { text: `Er kommt aus Ukraine.`, correct: false },
+          { text: `Er kommt in Ukraine.`, correct: false },
+          { text: `Er kommt aus die Ukraine.`, correct: false }
+        ],
+        explanation: `die Ukraine 與 die Türkei、die Schweiz 相同，皆屬於帶定冠詞的陰性國名，接 aus 後成為 aus der Ukraine。`
+      },
+      {
+        id: `q11`, topic: `國家與介系詞`,
+        prompt: `選出正確填入空格的介系詞：Ich komme ___ Spanien, und ich wohne ___ Berlin.`,
+        options: [
+          { text: `aus / in`, correct: true },
+          { text: `in / aus`, correct: false },
+          { text: `aus / aus`, correct: false },
+          { text: `in / in`, correct: false }
+        ],
+        explanation: `kommen 搭配 aus（來自某地）；wohnen 搭配 in（住在某地）。`
+      },
+      {
+        id: `q12`, topic: `動詞變位`,
+        prompt: `填入正確的動詞形式：Woher ___ du, Paul?（kommen）`,
+        options: [
+          { text: `kommst`, correct: true },
+          { text: `komme`, correct: false },
+          { text: `kommt`, correct: false },
+          { text: `kommen`, correct: false }
+        ],
+        explanation: `主詞為 du 時，規則動詞的現在式字尾固定為 -st（du kommst）。`
+      },
+      {
+        id: `q13`, topic: `動詞變位`,
+        prompt: `填入正確的動詞形式：Entschuldigung, wie ___ du?（heißen）`,
+        options: [
+          { text: `heißt`, correct: true },
+          { text: `heißst`, correct: false },
+          { text: `heiße`, correct: false },
+          { text: `heißen`, correct: false }
+        ],
+        explanation: `heißen 的字幹以 ß 結尾，因此搭配 du 時不再多加 s，直接寫為 heißt。`
+      },
+      {
+        id: `q14`, topic: `動詞變位`,
+        prompt: `填入正確的動詞形式：Olga ___ Russisch und Englisch.（sprechen）`,
+        options: [
+          { text: `spricht`, correct: true },
+          { text: `sprecht`, correct: false },
+          { text: `spreche`, correct: false },
+          { text: `sprichst`, correct: false }
+        ],
+        explanation: `sprechen 在第二、三人稱單數會發生母音變化 e → i，因此 Olga（sie）對應 spricht。`
+      },
+      {
+        id: `q15`, topic: `動詞變位`,
+        prompt: `填入不規則動詞 sein 的正確形式：___ du aus Russland?`,
+        options: [
+          { text: `Bist`, correct: true },
+          { text: `Bin`, correct: false },
+          { text: `Ist`, correct: false },
+          { text: `Sind`, correct: false }
+        ],
+        explanation: `sein 搭配 du 的現在式變化為 bist（Bist du ...?）。`
+      },
+      {
+        id: `q16`, topic: `動詞變位`,
+        prompt: `填入動詞 sein 的正確形式：Guten Tag, ___ Sie Herr Kraus?`,
+        options: [
+          { text: `sind`, correct: true },
+          { text: `ist`, correct: false },
+          { text: `bist`, correct: false },
+          { text: `bin`, correct: false }
+        ],
+        explanation: `尊稱 Sie 搭配動詞 sein 時永遠使用 sind（Sind Sie ...?）。`
+      },
+      {
+        id: `q17`, topic: `動詞變位`,
+        prompt: `填入正確的動詞形式：Ich ___ jetzt in Deutschland.（wohnen）`,
+        options: [
+          { text: `wohne`, correct: true },
+          { text: `wohnst`, correct: false },
+          { text: `wohnt`, correct: false },
+          { text: `wohnen`, correct: false }
+        ],
+        explanation: `第一人稱單數 ich 搭配規則動詞字尾 -e（ich wohne）。`
+      },
+      {
+        id: `q18`, topic: `動詞變位`,
+        prompt: `填入正確的動詞形式：___ Sie auch Persisch?（sprechen）`,
+        options: [
+          { text: `Sprechen`, correct: true },
+          { text: `Spricht`, correct: false },
+          { text: `Sprichst`, correct: false },
+          { text: `Sprecht`, correct: false }
+        ],
+        explanation: `尊稱 Sie 不會發生母音變化，保持原型字尾 -en（Sprechen Sie ...?）。`
+      },
+      {
+        id: `q19`, topic: `句型與語序`,
+        prompt: `以下哪一個德語陳述句的語序與大小寫完全正確？`,
+        options: [
+          { text: `Mein Name ist Sánchez.`, correct: true },
+          { text: `Mein name Sánchez ist.`, correct: false },
+          { text: `Ist mein Name Sánchez.`, correct: false },
+          { text: `Mein Name Sánchez ist.`, correct: false }
+        ],
+        explanation: `陳述句中限定動詞（ist）必須在第二順位，且名詞 Name 首字母必須大寫。`
+      },
+      {
+        id: `q20`, topic: `句型與語序`,
+        prompt: `將以下字詞排成正確的疑問句：kommen / Sie / woher / ?`,
+        options: [
+          { text: `Woher kommen Sie?`, correct: true },
+          { text: `Woher Sie kommen?`, correct: false },
+          { text: `Sie kommen woher?`, correct: false },
+          { text: `Kommen woher Sie?`, correct: false }
+        ],
+        explanation: `W-疑問句結構為「W-疑問詞（第1位）+ 動詞（第2位）+ 主詞（第3位）」。`
+      },
+      {
+        id: `q21`, topic: `個人資料`,
+        prompt: `課本學生資料卡寫著「Magdalena Kowalska」，請問 Magdalena 是她的什麼？`,
+        options: [
+          { text: `Vorname（名字）`, correct: true },
+          { text: `Familienname（姓氏）`, correct: false },
+          { text: `Wohnort（居住地）`, correct: false },
+          { text: `Beruf（職業）`, correct: false }
+        ],
+        explanation: `根據課本 1/9a，Magdalena 是 Vorname（名字），Kowalska 是 Familienname（姓氏）。`
+      },
+      {
+        id: `q22`, topic: `字母拼讀`,
+        prompt: `在德語字母表中，字母 V 與 W 的讀音分別近似於？`,
+        options: [
+          { text: `Vau / We`, correct: true },
+          { text: `We / Vau`, correct: false },
+          { text: `Vau / Ypsilon`, correct: false },
+          { text: `Qu / We`, correct: false }
+        ],
+        explanation: `德語中 V 唸作 Vau（類似英文 fow），W 唸作 We（類似英文 vay）。`
+      },
+      {
+        id: `q23`, topic: `德語拼寫規則`,
+        prompt: `關於德語名詞與代名詞的書寫規則，下列何者正確？`,
+        options: [
+          { text: `所有名詞首字母皆大寫，ich 位於句中則小寫`, correct: true },
+          { text: `只有人名與國名才大寫，一般名詞小寫`, correct: false },
+          { text: `第一人稱 ich 無論在句首或句中都要大寫`, correct: false },
+          { text: `正式稱呼 Sie 只有在句首時才大寫`, correct: false }
+        ],
+        explanation: `德語所有名詞（如 Name, Stadt, Sprache）與尊稱 Sie 永遠大寫；而 ich 只有在句首才大寫。`
+      },
+      {
+        id: `q24`, topic: `人物與職業`,
+        prompt: `根據課本 1/11b《Leute aus Deutschland》，來自 Dresden 的 Sandra Petri 職業是？`,
+        options: [
+          { text: `Automechanikerin（女性汽車修護技師）`, correct: true },
+          { text: `Deutschlehrerin（德語教師）`, correct: false },
+          { text: `Sekretärin（秘書）`, correct: false },
+          { text: `Ärztin（女醫師）`, correct: false }
+        ],
+        explanation: `課本 1/11b：Sandra Petri（Dresden）是 Automechanikerin；Christoph Ulreich（München）是 Deutschlehrer；Martina Keller（Berlin）是 Sekretärin。`
+      }
+    ];
+
+    /* =====================================================================
+       STATE & PERSISTENCE (notebookAppApi)
+    ===================================================================== */
+
+    const appState = {
+      masteredIds: [],
+      quizBestScore: 0,
+      quizAttempts: 0
+    };
+
+    let currentVocabCat = `all`;
+    let onlyUnmastered = false;
+    let flashcardDeck = [...VOCAB_DATA];
+    let flashcardIndex = 0;
+    let isFlipped = false;
+    let activeLetter = `A`;
+    let spellTimer = null;
+
+    let currentDialogueIdx = 0;
+    let showDialogueZh = true;
+    let currentRoleplayIdx = 0;
+    let roleplayAnswered = false;
+
+    let currentSyntaxMode = `aussage`;
+    let currentSyntaxPresetIdx = 0;
+    let currentScrambleIdx = 0;
+    let scramblePlacedIndices = [];
+
+    let currentVerb = `kommen`;
+    let currentPronoun = `ich`;
+    let currentWWord = `Wer`;
+
+    let quizSession = [];
+    let quizCurrentIdx = 0;
+    let quizScore = 0;
+    let quizAnsweredCurrent = false;
+    let quizAnswersLog = [];
+
+    async function persistAppState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          await window.notebookAppApi.setAppState({
+            masteredIds: appState.masteredIds,
+            quizBestScore: appState.quizBestScore,
+            quizAttempts: appState.quizAttempts
+          });
+        }
+      } catch (err) {
+        /* Fail silently in standalone viewer */
+      }
+    }
+
+    function updateGlobalProgressPill() {
+      const pill = document.getElementById(`global-progress-pill`);
+      if (pill) {
+        pill.textContent = `已熟記 ${appState.masteredIds.length}/${VOCAB_DATA.length} 詞彙 · 最高測驗 ${appState.quizBestScore}/10`;
+      }
+      const hist = document.getElementById(`quiz-history-label`);
+      if (hist) {
+        hist.textContent = appState.quizAttempts > 0
+          ? `歷史最高成績：${appState.quizBestScore} / 10（累計完成 ${appState.quizAttempts} 次）`
+          : `歷史最高成績：尚未完成測驗`;
+      }
+    }
+
+    /* =====================================================================
+       SPEECH SYNTHESIS (de-DE with graceful fallback)
+    ===================================================================== */
+
+    function speakGerman(text, rate) {
+      if (!text) return;
+      try {
+        if (`speechSynthesis` in window) {
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.lang = `de-DE`;
+          utter.rate = rate || 0.92;
+          const voices = window.speechSynthesis.getVoices();
+          const deVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(`de`));
+          if (deVoice) utter.voice = deVoice;
+          window.speechSynthesis.speak(utter);
+        }
+      } catch (e) {
+        /* Ignore if speechSynthesis blocked by sandbox */
+      }
+    }
+
+    function stopSpeaking() {
+      if (spellTimer) {
+        clearTimeout(spellTimer);
+        spellTimer = null;
+      }
+      try {
+        if (`speechSynthesis` in window) {
+          window.speechSynthesis.cancel();
+        }
+      } catch (e) {}
+      const chips = document.querySelectorAll(`.spell-chip.speaking`);
+      chips.forEach(c => c.classList.remove(`speaking`));
+      const lines = document.querySelectorAll(`.dialogue-turn.active-line`);
+      lines.forEach(l => l.classList.remove(`active-line`));
+    }
+
+    /* =====================================================================
+       SECTION 1: FLASHCARDS, VOCABULARY & ALPHABET
+    ===================================================================== */
+
+    function rebuildFlashcardDeck(keepIndex) {
+      let filtered = VOCAB_DATA.filter(item => currentVocabCat === `all` || item.cat === currentVocabCat);
+      if (onlyUnmastered) {
+        const unmastered = filtered.filter(item => !appState.masteredIds.includes(item.id));
+        if (unmastered.length > 0) {
+          filtered = unmastered;
+        }
+      }
+      flashcardDeck = filtered;
+      if (!keepIndex || flashcardIndex >= flashcardDeck.length) {
+        flashcardIndex = 0;
+      }
+      isFlipped = false;
+      renderFlashcard();
+      renderVocabList();
+    }
+
+    function setVocabCategory(cat) {
+      currentVocabCat = cat;
+      const buttons = document.querySelectorAll(`#vocab-category-filters .filter-pill`);
+      buttons.forEach(btn => {
+        btn.classList.toggle(`active`, btn.dataset.cat === cat);
+      });
+      rebuildFlashcardDeck(false);
+    }
+
+    function toggleUnmasteredOnly() {
+      onlyUnmastered = !onlyUnmastered;
+      const btn = document.getElementById(`toggle-unmastered-btn`);
+      if (btn) {
+        btn.classList.toggle(`active`, onlyUnmastered);
+      }
+      rebuildFlashcardDeck(false);
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = tmp;
+      }
+      return copy;
+    }
+
+    function shuffleFlashcards() {
+      flashcardDeck = shuffleArray(flashcardDeck);
+      flashcardIndex = 0;
+      isFlipped = false;
+      renderFlashcard();
+    }
+
+    function renderFlashcard() {
+      const cardEl = document.getElementById(`flashcard-el`);
+      if (!cardEl || flashcardDeck.length === 0) return;
+
+      cardEl.classList.toggle(`flipped`, isFlipped);
+      const item = flashcardDeck[flashcardIndex];
+      const isMastered = appState.masteredIds.includes(item.id);
+
+      const catBadge = document.getElementById(`fc-category-badge`);
+      const catBadgeBack = document.getElementById(`fc-category-badge-back`);
+      const masteryBadge = document.getElementById(`fc-mastery-badge`);
+      const deEl = document.getElementById(`fc-de`);
+      const metaEl = document.getElementById(`fc-meta`);
+      const zhEl = document.getElementById(`fc-zh`);
+      const exEl = document.getElementById(`fc-example`);
+      const noteEl = document.getElementById(`fc-note`);
+      const masterBtn = document.getElementById(`fc-master-btn`);
+      const counterEl = document.getElementById(`fc-counter`);
+      const counterBack = document.getElementById(`fc-counter-back`);
+      const progBar = document.getElementById(`fc-progress-bar`);
+
+      if (catBadge) catBadge.textContent = item.catLabel;
+      if (catBadgeBack) catBadgeBack.textContent = item.catLabel;
+      if (masteryBadge) {
+        masteryBadge.textContent = isMastered ? `已熟記` : `待複習`;
+        masteryBadge.className = isMastered ? `chip positive` : `chip neutral`;
+      }
+      if (deEl) deEl.textContent = item.de;
+      if (metaEl) metaEl.textContent = item.meta;
+      if (zhEl) zhEl.textContent = item.zh;
+      if (exEl) exEl.textContent = item.ex;
+      if (noteEl) noteEl.textContent = item.note;
+      if (masterBtn) {
+        masterBtn.textContent = isMastered ? `取消熟記標記` : `標記為已熟記`;
+        masterBtn.className = isMastered ? `btn-secondary` : `btn-primary`;
+      }
+      const countText = `第 ${flashcardIndex + 1} / ${flashcardDeck.length} 張`;
+      if (counterEl) counterEl.textContent = countText;
+      if (counterBack) counterBack.textContent = `${flashcardIndex + 1} / ${flashcardDeck.length}`;
+      if (progBar) {
+        const pct = Math.round(((flashcardIndex + 1) / flashcardDeck.length) * 100);
+        progBar.style.width = `${pct}%`;
+      }
+    }
+
+    function flipFlashcard() {
+      isFlipped = !isFlipped;
+      const cardEl = document.getElementById(`flashcard-el`);
+      if (cardEl) cardEl.classList.toggle(`flipped`, isFlipped);
+    }
+
+    function handleFlashcardKey(e) {
+      if (e.key === ` ` || e.key === `Enter`) {
+        e.preventDefault();
+        flipFlashcard();
+      } else if (e.key === `ArrowRight`) {
+        e.preventDefault();
+        nextFlashcard();
+      } else if (e.key === `ArrowLeft`) {
+        e.preventDefault();
+        prevFlashcard();
+      }
+    }
+
+    function nextFlashcard() {
+      if (flashcardDeck.length === 0) return;
+      flashcardIndex = (flashcardIndex + 1) % flashcardDeck.length;
+      isFlipped = false;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      if (flashcardDeck.length === 0) return;
+      flashcardIndex = (flashcardIndex - 1 + flashcardDeck.length) % flashcardDeck.length;
+      isFlipped = false;
+      renderFlashcard();
+    }
+
+    function speakFlashcard(e) {
+      if (e) e.stopPropagation();
+      const item = flashcardDeck[flashcardIndex];
+      if (item) speakGerman(item.de);
+    }
+
+    function toggleMasterCurrent(e) {
+      if (e) e.stopPropagation();
+      const item = flashcardDeck[flashcardIndex];
+      if (!item) return;
+      const idx = appState.masteredIds.indexOf(item.id);
+      if (idx === -1) {
+        appState.masteredIds.push(item.id);
+      } else {
+        appState.masteredIds.splice(idx, 1);
+      }
+      updateGlobalProgressPill();
+      persistAppState();
+      renderFlashcard();
+      renderVocabList();
+    }
+
+    function renderVocabList() {
+      const container = document.getElementById(`vocab-list-container`);
+      const searchInput = document.getElementById(`vocab-search-input`);
+      if (!container) return;
+
+      const query = searchInput ? searchInput.value.trim().toLowerCase() : ``;
+      const items = VOCAB_DATA.filter(item => {
+        const matchCat = currentVocabCat === `all` || item.cat === currentVocabCat;
+        const matchQuery = !query ||
+          item.de.toLowerCase().includes(query) ||
+          item.zh.toLowerCase().includes(query) ||
+          item.meta.toLowerCase().includes(query);
+        return matchCat && matchQuery;
+      });
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="status-banner info" style="grid-column: 1 / -1;">找不到符合「${escapeHtml(query)}」的字彙，請清除搜尋文字或切換其他分類。</div>`;
+        return;
+      }
+
+      container.innerHTML = items.map(item => {
+        const mastered = appState.masteredIds.includes(item.id);
+        return `
+          <div class="vocab-item">
+            <div>
+              <div class="term">${escapeHtml(item.de)}</div>
+              <div class="meaning">${escapeHtml(item.zh)} · ${escapeHtml(item.meta)}</div>
+              ${mastered ? `<span class="chip positive" style="margin-top: var(--space-xs);">已熟記</span>` : ``}
+            </div>
+            <button type="button" class="speak-icon-btn" aria-label="朗讀 ${escapeHtml(item.de)}" onclick="speakVocabById('${item.id}')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function speakVocabById(id) {
+      const found = VOCAB_DATA.find(v => v.id === id);
+      if (found) speakGerman(found.de);
+    }
+
+    function renderAlphabetBoard() {
+      const grid = document.getElementById(`alpha-grid`);
+      if (!grid) return;
+      grid.innerHTML = ALPHABET_DATA.map(item => `
+        <button type="button" class="alpha-btn ${item.l === activeLetter ? `active` : ``}" onclick="clickAlpha('${item.l}')">
+          <span class="letter">${item.l}</span>
+          <span class="sound">${item.p}</span>
+        </button>
+      `).join(``);
+    }
+
+    function clickAlpha(letter) {
+      activeLetter = letter;
+      renderAlphabetBoard();
+      const found = ALPHABET_DATA.find(a => a.l === letter);
+      if (found) speakGerman(found.say, 0.85);
+    }
+
+    function setSpellPreset(name) {
+      const input = document.getElementById(`spell-input`);
+      if (input) {
+        input.value = name;
+        renderSpellingPreview();
+      }
+    }
+
+    function getPhoneticForChar(ch) {
+      const upper = ch === `ß` ? `ß` : ch.toUpperCase();
+      const mapSpecial = { 'Á': `a`, 'É': `e`, 'Í': `i`, 'Ó': `o`, 'Ú': `u` };
+      const lookup = mapSpecial[upper] || upper;
+      const found = ALPHABET_DATA.find(a => a.l === lookup);
+      return found ? found : null;
+    }
+
+    function renderSpellingPreview() {
+      const input = document.getElementById(`spell-input`);
+      const strip = document.getElementById(`spell-preview-strip`);
+      if (!input || !strip) return;
+      const chars = Array.from(input.value.trim()).filter(c => c !== ` `);
+      if (chars.length === 0) {
+        strip.innerHTML = `<span class="form-label">請輸入英德文字母以顯示拼讀音標。</span>`;
+        return;
+      }
+      strip.innerHTML = chars.map((ch, idx) => {
+        const info = getPhoneticForChar(ch);
+        const ph = info ? info.p : `—`;
+        return `
+          <div class="spell-chip" id="spell-chip-${idx}">
+            <strong class="de-word">${escapeHtml(ch)}</strong>
+            <span class="spell-phonetic">${escapeHtml(ph)}</span>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function playSpellingSequence() {
+      stopSpeaking();
+      const input = document.getElementById(`spell-input`);
+      if (!input) return;
+      const chars = Array.from(input.value.trim()).filter(c => c !== ` `);
+      if (chars.length === 0) return;
+
+      let step = 0;
+      function playNext() {
+        document.querySelectorAll(`.spell-chip.speaking`).forEach(el => el.classList.remove(`speaking`));
+        if (step >= chars.length) {
+          speakGerman(input.value.trim(), 0.9);
+          return;
+        }
+        const chip = document.getElementById(`spell-chip-${step}`);
+        if (chip) chip.classList.add(`speaking`);
+        const info = getPhoneticForChar(chars[step]);
+        speakGerman(info ? info.say : chars[step], 0.85);
+        step += 1;
+        spellTimer = setTimeout(playNext, 650);
+      }
+      playNext();
+    }
+
+    /* =====================================================================
+       SECTION 2: DIALOGUES, ROLEPLAY & STECKBRIEF
+    ===================================================================== */
+
+    function formatDialogueLine(text, isFormal) {
+      const safe = escapeHtml(text);
+      if (isFormal) {
+        return safe
+          .replace(/\b(Sie|Ihr|heißen|kommen|sind)\b/g, `<span class="highlight-sie">$1</span>`);
+      }
+      return safe
+        .replace(/\b(du|heißt|kommst|bist)\b/g, `<span class="highlight-du">$1</span>`);
+    }
+
+    function selectDialogue(idx) {
+      currentDialogueIdx = idx;
+      const tabs = document.querySelectorAll(`#dialogue-tabs .segmented-btn`);
+      tabs.forEach((btn, i) => btn.classList.toggle(`active`, i === idx));
+      renderDialogue();
+    }
+
+    function toggleDialogueZh() {
+      showDialogueZh = !showDialogueZh;
+      const btn = document.getElementById(`dlg-zh-toggle`);
+      if (btn) btn.classList.toggle(`active`, showDialogueZh);
+      renderDialogue();
+    }
+
+    function renderDialogue() {
+      const dlg = DIALOGUES_DATA[currentDialogueIdx];
+      const chip = document.getElementById(`dlg-register-chip`);
+      const container = document.getElementById(`dialogue-lines-container`);
+      if (!dlg || !container) return;
+
+      if (chip) {
+        chip.textContent = dlg.chip;
+        chip.className = dlg.isFormal ? `chip secondary` : `chip`;
+      }
+
+      container.innerHTML = dlg.lines.map((line, i) => `
+        <div class="dialogue-turn" id="dlg-line-${i}">
+          <div>
+            <span class="speaker-badge">${escapeHtml(line.speaker)}</span>
+            <p class="turn-de">${formatDialogueLine(line.de, dlg.isFormal)}</p>
+            ${showDialogueZh ? `<p class="turn-zh">${escapeHtml(line.zh)}</p>` : ``}
+          </div>
+          <button type="button" class="speak-icon-btn" aria-label="朗讀此句：${escapeHtml(line.de)}" onclick="speakDialogueLine(${i})">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          </button>
+        </div>
+      `).join(``);
+    }
+
+    function speakDialogueLine(idx) {
+      const dlg = DIALOGUES_DATA[currentDialogueIdx];
+      if (!dlg || !dlg.lines[idx]) return;
+      document.querySelectorAll(`.dialogue-turn.active-line`).forEach(el => el.classList.remove(`active-line`));
+      const row = document.getElementById(`dlg-line-${idx}`);
+      if (row) row.classList.add(`active-line`);
+      speakGerman(dlg.lines[idx].de, 0.9);
+    }
+
+    function playFullDialogue() {
+      stopSpeaking();
+      const dlg = DIALOGUES_DATA[currentDialogueIdx];
+      if (!dlg) return;
+      let i = 0;
+      function stepLine() {
+        document.querySelectorAll(`.dialogue-turn.active-line`).forEach(el => el.classList.remove(`active-line`));
+        if (i >= dlg.lines.length) return;
+        const row = document.getElementById(`dlg-line-${i}`);
+        if (row) row.classList.add(`active-line`);
+        speakGerman(dlg.lines[i].de, 0.9);
+        const duration = Math.max(1800, dlg.lines[i].de.length * 75);
+        i += 1;
+        spellTimer = setTimeout(stepLine, duration);
+      }
+      stepLine();
+    }
+
+    function renderRoleplay() {
+      const sc = ROLEPLAY_SCENARIOS[currentRoleplayIdx];
+      const tagEl = document.getElementById(`rp-context-tag`);
+      const promptDe = document.getElementById(`rp-prompt-de`);
+      const promptZh = document.getElementById(`rp-prompt-zh`);
+      const listEl = document.getElementById(`rp-options-list`);
+      const fbEl = document.getElementById(`rp-feedback-box`);
+      if (!sc || !listEl) return;
+
+      roleplayAnswered = false;
+      if (tagEl) tagEl.textContent = sc.tag;
+      if (promptDe) promptDe.textContent = sc.promptDe;
+      if (promptZh) promptZh.textContent = sc.promptZh;
+      if (fbEl) fbEl.innerHTML = ``;
+
+      const shuffled = shuffleArray(sc.options);
+      listEl.innerHTML = shuffled.map((opt, i) => `
+        <button type="button" class="quiz-option-btn" style="background-color: var(--background);" onclick="answerRoleplay(${i}, ${opt.correct}, \`${opt.feedback}\`, this)">
+          <span class="quiz-option-key">${String.fromCharCode(65 + i)}</span>
+          <span class="de-word">${escapeHtml(opt.text)}</span>
+        </button>
+      `).join(``);
+    }
+
+    function answerRoleplay(idx, isCorrect, feedback, btnEl) {
+      if (roleplayAnswered) return;
+      roleplayAnswered = true;
+      const buttons = document.querySelectorAll(`#rp-options-list .quiz-option-btn`);
+      buttons.forEach(b => { b.disabled = true; });
+      if (btnEl) {
+        btnEl.classList.add(isCorrect ? `correct` : `wrong`);
+      }
+      const fbEl = document.getElementById(`rp-feedback-box`);
+      if (fbEl) {
+        fbEl.innerHTML = `<div class="status-banner ${isCorrect ? `positive` : `error`}">${escapeHtml(feedback)}</div>`;
+      }
+      if (isCorrect && btnEl) {
+        const spanText = btnEl.querySelector(`.de-word`);
+        if (spanText) speakGerman(spanText.textContent);
+      }
+    }
+
+    function resetRoleplay() {
+      currentRoleplayIdx = (currentRoleplayIdx + 1) % ROLEPLAY_SCENARIOS.length;
+      renderRoleplay();
+    }
+
+    function updateSteckbrief() {
+      const anredeEl = document.getElementById(`sb-anrede`);
+      const vornameEl = document.getElementById(`sb-vorname`);
+      const nachnameEl = document.getElementById(`sb-nachname`);
+      const landEl = document.getElementById(`sb-land`);
+      const stadtEl = document.getElementById(`sb-stadt`);
+      const sprachenEl = document.getElementById(`sb-sprachen`);
+      const outDe = document.getElementById(`sb-output-de`);
+      const outZh = document.getElementById(`sb-output-zh`);
+      if (!anredeEl || !outDe || !outZh) return;
+
+      const parts = anredeEl.value.split(`|`);
+      const anrede = parts[0];
+      const mode = parts[1];
+      const vorname = (vornameEl && vornameEl.value.trim()) || `Yi-Chun`;
+      const nachname = (nachnameEl && nachnameEl.value.trim()) || `Lin`;
+      const land = (landEl && landEl.value) || `Taiwan`;
+      const stadt = (stadtEl && stadtEl.value.trim()) || `Taipei`;
+      const sprachen = (sprachenEl && sprachenEl.value.trim()) || `Chinesisch und Deutsch`;
+
+      const greet = mode === `Sie` ? `Guten Tag!` : `Hallo!`;
+      const intro = mode === `Sie`
+        ? `Mein Name ist ${vorname} ${nachname} (${anrede} ${nachname}).`
+        : `Ich heiße ${vorname} ${nachname}.`;
+
+      const textDe = `${greet} ${intro} Ich komme aus ${land}. Ich wohne in ${stadt}. Ich spreche ${sprachen}.`;
+      const textZh = `${mode === `Sie` ? `您好！` : `哈囉！`}我叫 ${vorname} ${nachname}。我來自 ${land}，現在住在 ${stadt}。我會說 ${sprachen}。`;
+
+      outDe.textContent = textDe;
+      outZh.textContent = textZh;
+    }
+
+    function speakSteckbrief() {
+      const outDe = document.getElementById(`sb-output-de`);
+      if (outDe) speakGerman(outDe.textContent, 0.9);
+    }
+
+    /* =====================================================================
+       SECTION 3: GRAMMAR VISUALIZATION TOOLS
+    ===================================================================== */
+
+    function setSyntaxMode(mode) {
+      currentSyntaxMode = mode;
+      currentSyntaxPresetIdx = 0;
+      const btnA = document.getElementById(`mode-aussage`);
+      const btnW = document.getElementById(`mode-wfrage`);
+      if (btnA) btnA.classList.toggle(`active`, mode === `aussage`);
+      if (btnW) btnW.classList.toggle(`active`, mode === `wfrage`);
+      renderSyntaxTool();
+    }
+
+    function selectSyntaxPreset(idx) {
+      currentSyntaxPresetIdx = idx;
+      renderSyntaxTool();
+    }
+
+    function renderSyntaxTool() {
+      const presets = SYNTAX_PRESETS[currentSyntaxMode];
+      const presetWrap = document.getElementById(`syntax-presets`);
+      if (!presets || !presetWrap) return;
+
+      presetWrap.innerHTML = presets.map((p, idx) => `
+        <button type="button" class="filter-pill ${idx === currentSyntaxPresetIdx ? `active` : ``}" onclick="selectSyntaxPreset(${idx})">
+          ${escapeHtml(p.p1)} ${escapeHtml(p.p2)} ${escapeHtml(p.p3)}
+        </button>
+      `).join(``);
+
+      const cur = presets[currentSyntaxPresetIdx];
+      const l1 = document.getElementById(`slot-1-label`);
+      const w1 = document.getElementById(`slot-1-word`);
+      const n1 = document.getElementById(`slot-1-note`);
+      const w2 = document.getElementById(`slot-2-word`);
+      const n2 = document.getElementById(`slot-2-note`);
+      const w3 = document.getElementById(`slot-3-word`);
+      const n3 = document.getElementById(`slot-3-note`);
+
+      if (l1) l1.textContent = currentSyntaxMode === `aussage` ? `Position 1 · 主詞` : `Position 1 · W-疑問詞`;
+      if (w1) w1.textContent = cur.p1;
+      if (n1) n1.textContent = cur.n1;
+      if (w2) w2.textContent = cur.p2;
+      if (n2) n2.textContent = cur.n2;
+      if (w3) w3.textContent = cur.p3;
+      if (n3) n3.textContent = cur.n3;
+    }
+
+    let currentShuffledWords = [];
+
+    function loadScrambleExercise() {
+      const ex = SCRAMBLE_EXERCISES[currentScrambleIdx];
+      const counter = document.getElementById(`scramble-counter`);
+      const hint = document.getElementById(`scramble-hint`);
+      const fb = document.getElementById(`scramble-feedback`);
+      if (!ex) return;
+
+      scramblePlacedIndices = [];
+      currentShuffledWords = shuffleArray(ex.words.map((w, i) => ({ word: w, origIdx: i })));
+      if (counter) counter.textContent = `第 ${currentScrambleIdx + 1} / ${SCRAMBLE_EXERCISES.length} 題`;
+      if (hint) hint.textContent = `目標句意：${ex.hint}`;
+      if (fb) fb.innerHTML = ``;
+      renderScrambleBoard();
+    }
+
+    function renderScrambleBoard() {
+      const ex = SCRAMBLE_EXERCISES[currentScrambleIdx];
+      const ansZone = document.getElementById(`scramble-answer-zone`);
+      const pool = document.getElementById(`scramble-pool`);
+      const fb = document.getElementById(`scramble-feedback`);
+      if (!ex || !ansZone || !pool) return;
+
+      if (scramblePlacedIndices.length === 0) {
+        ansZone.innerHTML = `<span class="form-label" style="padding: var(--space-xs);">點擊下方字卡依序組合成德語句子…</span>`;
+      } else {
+        ansZone.innerHTML = scramblePlacedIndices.map((poolIdx, pos) => `
+          <button type="button" class="word-tile placed" onclick="removeScrambleWord(${pos})">${escapeHtml(currentShuffledWords[poolIdx].word)}</button>
+        `).join(``);
+      }
+
+      pool.innerHTML = currentShuffledWords.map((item, poolIdx) => {
+        const used = scramblePlacedIndices.includes(poolIdx);
+        return `
+          <button type="button" class="word-tile" ${used ? `disabled` : ``} onclick="placeScrambleWord(${poolIdx})">${escapeHtml(item.word)}</button>
+        `;
+      }).join(``);
+
+      if (scramblePlacedIndices.length === currentShuffledWords.length && fb) {
+        const built = scramblePlacedIndices.map(idx => currentShuffledWords[idx].word).join(` `);
+        const isRight = built === ex.answer;
+        if (isRight) {
+          fb.innerHTML = `<div class="status-banner positive">完全正確！限定動詞成功鎖定在第二順位：${escapeHtml(ex.answer)}</div>`;
+          speakGerman(ex.answer);
+        } else {
+          fb.innerHTML = `<div class="status-banner error">順序還不對喔（目前為：${escapeHtml(built)}）。請檢查看看限定動詞是否在第二順位，點選上方藍色字卡即可撤回。</div>`;
+        }
+      } else if (fb) {
+        fb.innerHTML = ``;
+      }
+    }
+
+    function placeScrambleWord(poolIdx) {
+      if (!scramblePlacedIndices.includes(poolIdx)) {
+        scramblePlacedIndices.push(poolIdx);
+        renderScrambleBoard();
+      }
+    }
+
+    function removeScrambleWord(pos) {
+      scramblePlacedIndices.splice(pos, 1);
+      renderScrambleBoard();
+    }
+
+    function clearScramble() {
+      scramblePlacedIndices = [];
+      renderScrambleBoard();
+    }
+
+    function nextScramble() {
+      currentScrambleIdx = (currentScrambleIdx + 1) % SCRAMBLE_EXERCISES.length;
+      loadScrambleExercise();
+    }
+
+    /* Conjugation Matrix */
+    function selectVerb(verb) {
+      currentVerb = verb;
+      document.querySelectorAll(`#conj-verb-tabs .filter-pill`).forEach(btn => {
+        btn.classList.toggle(`active`, btn.dataset.verb === verb);
+      });
+      renderConjugation();
+    }
+
+    function selectPronoun(pro) {
+      currentPronoun = pro;
+      document.querySelectorAll(`#conj-pronoun-tabs .segmented-btn`).forEach(btn => {
+        btn.classList.toggle(`active`, btn.dataset.pro === pro);
+      });
+      renderConjugation();
+    }
+
+    function renderConjugation() {
+      const data = CONJUGATION_DATA[currentVerb];
+      if (!data) return;
+      const form = data.forms[currentPronoun];
+      const proLabelMap = { ich: `ich`, du: `du`, er: `er / es / sie`, Sie: `Sie` };
+
+      const proEl = document.getElementById(`conj-pro-display`);
+      const stemEl = document.getElementById(`conj-stem-display`);
+      const endEl = document.getElementById(`conj-end-display`);
+      const exEl = document.getElementById(`conj-example-display`);
+      const ruleEl = document.getElementById(`conj-rule-note`);
+      const tbody = document.getElementById(`conj-table-body`);
+
+      if (proEl) proEl.textContent = proLabelMap[currentPronoun];
+      if (stemEl) stemEl.textContent = form.stem;
+      if (endEl) {
+        endEl.textContent = form.end;
+        endEl.className = form.irregular ? `morph-ending irregular` : `morph-ending`;
+      }
+      if (exEl) exEl.textContent = form.ex;
+      if (ruleEl) ruleEl.textContent = form.rule;
+
+      if (tbody) {
+        const keys = [`ich`, `du`, `er`, `Sie`];
+        const stdEnd = { ich: `-e`, du: `-st`, er: `-t`, Sie: `-en` };
+        tbody.innerHTML = keys.map(k => {
+          const row = data.forms[k];
+          return `
+            <tr class="${k === currentPronoun ? `active-row` : ``}" style="cursor: pointer;" onclick="selectPronoun('${k}')">
+              <td><strong>${proLabelMap[k]}</strong></td>
+              <td class="de-word"><strong>${escapeHtml(row.full)}</strong></td>
+              <td>${row.irregular ? `特殊變化` : stdEnd[k]}</td>
+            </tr>
+          `;
+        }).join(``);
+      }
+    }
+
+    /* W-Word Radar */
+    function selectWWord(w) {
+      currentWWord = w;
+      document.querySelectorAll(`#w-word-pills .filter-pill`).forEach(btn => {
+        btn.classList.toggle(`active`, btn.dataset.w === w);
+      });
+      const info = W_WORDS_DATA[w];
+      if (!info) return;
+
+      const focusEl = document.getElementById(`w-focus-chip`);
+      const titleEl = document.getElementById(`w-title`);
+      const descEl = document.getElementById(`w-desc`);
+      const qDe = document.getElementById(`w-q-de`);
+      const qZh = document.getElementById(`w-q-zh`);
+      const aDe = document.getElementById(`w-a-de`);
+      const aZh = document.getElementById(`w-a-zh`);
+      const tipEl = document.getElementById(`w-tip`);
+
+      if (focusEl) focusEl.textContent = info.focus;
+      if (titleEl) titleEl.textContent = info.title;
+      if (descEl) descEl.textContent = info.desc;
+      if (qDe) qDe.textContent = info.qDe;
+      if (qZh) qZh.textContent = info.qZh;
+      if (aDe) aDe.textContent = info.aDe;
+      if (aZh) aZh.textContent = info.aZh;
+      if (tipEl) tipEl.textContent = info.tip;
+    }
+
+    /* =====================================================================
+       SECTION 4: RANDOMIZED 24-QUESTION QUIZ ENGINE (10 RANDOM + SHUFFLED OPTIONS)
+    ===================================================================== */
+
+    function startNewQuiz() {
+      const drawn = shuffleArray(QUIZ_BANK).slice(0, 10).map(q => ({
+        ...q,
+        shuffledOptions: shuffleArray(q.options)
+      }));
+      quizSession = drawn;
+      quizCurrentIdx = 0;
+      quizScore = 0;
+      quizAnsweredCurrent = false;
+      quizAnswersLog = [];
+
+      const activeView = document.getElementById(`quiz-active-view`);
+      const summaryView = document.getElementById(`quiz-summary-view`);
+      if (activeView) activeView.style.display = `block`;
+      if (summaryView) summaryView.style.display = `none`;
+
+      const restartBtn = document.getElementById(`quiz-restart-btn`);
+      if (restartBtn) {
+        restartBtn.dataset.armed = `false`;
+        restartBtn.textContent = `重新抽 10 題`;
+      }
+
+      renderQuizQuestion();
+    }
+
+    function restartQuizInline(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `再點一次確認重抽`;
+        return;
+      }
+      startNewQuiz();
+    }
+
+    function renderQuizQuestion() {
+      const q = quizSession[quizCurrentIdx];
+      if (!q) return;
+
+      quizAnsweredCurrent = false;
+      const progChip = document.getElementById(`quiz-progress-chip`);
+      const topicChip = document.getElementById(`quiz-topic-chip`);
+      const scoreChip = document.getElementById(`quiz-score-chip`);
+      const progBar = document.getElementById(`quiz-progress-bar`);
+      const promptEl = document.getElementById(`quiz-question-prompt`);
+      const optionsGrid = document.getElementById(`quiz-options-grid`);
+      const fbArea = document.getElementById(`quiz-feedback-area`);
+      const nextBtn = document.getElementById(`quiz-next-btn`);
+
+      if (progChip) progChip.textContent = `第 ${quizCurrentIdx + 1} / ${quizSession.length} 題`;
+      if (topicChip) topicChip.textContent = q.topic;
+      if (scoreChip) scoreChip.textContent = `目前得分：${quizScore}`;
+      if (progBar) progBar.style.width = `${((quizCurrentIdx + 1) / quizSession.length) * 100}%`;
+      if (promptEl) promptEl.textContent = q.prompt;
+      if (fbArea) fbArea.innerHTML = ``;
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = quizCurrentIdx === quizSession.length - 1 ? `查看測驗成績` : `下一題`;
+      }
+
+      if (optionsGrid) {
+        optionsGrid.innerHTML = q.shuffledOptions.map((opt, i) => `
+          <button type="button" class="quiz-option-btn" onclick="selectQuizOption(${i})">
+            <span class="quiz-option-key">${String.fromCharCode(65 + i)}</span>
+            <span>${escapeHtml(opt.text)}</span>
+          </button>
+        `).join(``);
+      }
+    }
+
+    function selectQuizOption(optIdx) {
+      if (quizAnsweredCurrent) return;
+      quizAnsweredCurrent = true;
+
+      const q = quizSession[quizCurrentIdx];
+      const chosen = q.shuffledOptions[optIdx];
+      const correctIdx = q.shuffledOptions.findIndex(o => o.correct);
+      const isCorrect = Boolean(chosen && chosen.correct);
+
+      if (isCorrect) quizScore += 1;
+
+      quizAnswersLog.push({
+        prompt: q.prompt,
+        topic: q.topic,
+        chosenText: chosen ? chosen.text : ``,
+        correctText: q.shuffledOptions[correctIdx].text,
+        isCorrect: isCorrect,
+        explanation: q.explanation
+      });
+
+      const buttons = document.querySelectorAll(`#quiz-options-grid .quiz-option-btn`);
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correctIdx) {
+          btn.classList.add(`correct`);
+        } else if (i === optIdx && !isCorrect) {
+          btn.classList.add(`wrong`);
+        }
+      });
+
+      const scoreChip = document.getElementById(`quiz-score-chip`);
+      if (scoreChip) scoreChip.textContent = `目前得分：${quizScore}`;
+
+      const fbArea = document.getElementById(`quiz-feedback-area`);
+      if (fbArea) {
+        fbArea.innerHTML = `
+          <div class="quiz-feedback ${isCorrect ? `is-correct` : `is-wrong`}">
+            <strong>${isCorrect ? `答對了！` : `答錯了 — 正確答案為：${escapeHtml(q.shuffledOptions[correctIdx].text)}`}</strong>
+            <p style="margin: var(--space-xs) 0 0;">${escapeHtml(q.explanation)}</p>
+          </div>
+        `;
+      }
+
+      const nextBtn = document.getElementById(`quiz-next-btn`);
+      if (nextBtn) nextBtn.disabled = false;
+    }
+
+    function nextQuizQuestion() {
+      if (!quizAnsweredCurrent) return;
+      if (quizCurrentIdx < quizSession.length - 1) {
+        quizCurrentIdx += 1;
+        renderQuizQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function finishQuiz() {
+      appState.quizAttempts += 1;
+      if (quizScore > appState.quizBestScore) {
+        appState.quizBestScore = quizScore;
+      }
+      updateGlobalProgressPill();
+      persistAppState();
+
+      const activeView = document.getElementById(`quiz-active-view`);
+      const summaryView = document.getElementById(`quiz-summary-view`);
+      if (activeView) activeView.style.display = `none`;
+      if (summaryView) summaryView.style.display = `block`;
+
+      const pct = Math.round((quizScore / quizSession.length) * 100);
+      const verdictEl = document.getElementById(`quiz-final-verdict`);
+      const subEl = document.getElementById(`quiz-final-sub`);
+      const scoreVal = document.getElementById(`summary-score-val`);
+      const pctVal = document.getElementById(`summary-pct-val`);
+      const bestVal = document.getElementById(`summary-best-val`);
+      const attemptsVal = document.getElementById(`summary-attempts-val`);
+      const breakdownEl = document.getElementById(`summary-topic-breakdown`);
+      const reviewEl = document.getElementById(`summary-review-list`);
+
+      if (verdictEl) {
+        verdictEl.textContent = pct >= 90 ? `表現優異！你已完整掌握第一章`
+          : pct >= 70 ? `基礎穩固！只差一點細節就能滿分`
+          : `繼續加油！建議複習下方錯題解析`;
+      }
+      if (subEl) {
+        subEl.textContent = `本次從 24 題大題庫中隨機抽取 10 題作答，共答對 ${quizScore} 題。`;
+      }
+      if (scoreVal) scoreVal.textContent = `${quizScore} / 10`;
+      if (pctVal) pctVal.textContent = `${pct}%`;
+      if (bestVal) bestVal.textContent = `${appState.quizBestScore} / 10`;
+      if (attemptsVal) attemptsVal.textContent = `${appState.quizAttempts}`;
+
+      // Topic breakdown
+      if (breakdownEl) {
+        const topicMap = {};
+        quizAnswersLog.forEach(entry => {
+          if (!topicMap[entry.topic]) topicMap[entry.topic] = { total: 0, right: 0 };
+          topicMap[entry.topic].total += 1;
+          if (entry.isCorrect) topicMap[entry.topic].right += 1;
+        });
+        breakdownEl.innerHTML = `
+          <h4 class="tile-title" style="font-size: 1.0625rem; margin-bottom: var(--space-md);">各主題答對分布</h4>
+          <div style="display: grid; gap: var(--space-sm);">
+            ${Object.keys(topicMap).map(t => {
+              const stat = topicMap[t];
+              const ratio = Math.round((stat.right / stat.total) * 100);
+              return `
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: var(--space-xs);">
+                    <span>${escapeHtml(t)}</span>
+                    <span style="font-variant-numeric: tabular-nums;">${stat.right} / ${stat.total} (${ratio}%)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width: ${ratio}%; background-color: ${ratio === 100 ? `var(--positive)` : `var(--primary)`};"></div>
+                  </div>
+                </div>
+              `;
+            }).join(``)}
+          </div>
+        `;
+      }
+
+      if (reviewEl) {
+        reviewEl.innerHTML = quizAnswersLog.map((entry, idx) => `
+          <div class="review-item">
+            <div class="quiz-topbar" style="margin-bottom: var(--space-xs);">
+              <span class="chip ${entry.isCorrect ? `positive` : `secondary`}">${entry.isCorrect ? `第 ${idx + 1} 題 · 正確` : `第 ${idx + 1} 題 · 待加強`}</span>
+              <span class="chip neutral">${escapeHtml(entry.topic)}</span>
+            </div>
+            <p style="font-weight: 600; margin: var(--space-xs) 0;">${escapeHtml(entry.prompt)}</p>
+            <p style="margin: var(--space-xs) 0; font-size: 0.875rem;">
+              你的作答：<strong style="color: ${entry.isCorrect ? `var(--positive)` : `var(--error)`};">${escapeHtml(entry.chosenText)}</strong>
+              ${!entry.isCorrect ? ` · 正確答案：<strong style="color: var(--positive);">${escapeHtml(entry.correctText)}</strong>` : ``}
+            </p>
+            <p style="margin: 0; font-size: 0.875rem; color: var(--on-surface-variant);">解析：${escapeHtml(entry.explanation)}</p>
+          </div>
+        `).join(``);
+      }
+    }
+
+    /* =====================================================================
+       UTILITIES & INITIALIZATION
+    ===================================================================== */
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return ``;
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`)
+        .replace(/'/g, `&#39;`);
+    }
+
+    function setupScrollReveal() {
+      const items = document.querySelectorAll(`.reveal`);
+      if (!(`IntersectionObserver` in window)) {
+        items.forEach(el => el.classList.add(`visible`));
+        return;
+      }
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(`visible`);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      items.forEach(el => obs.observe(el));
+    }
+
+    async function initApp() {
+      // Load persisted state via notebookAppApi
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (Array.isArray(saved.masteredIds)) appState.masteredIds = saved.masteredIds;
+            if (typeof saved.quizBestScore === `number`) appState.quizBestScore = saved.quizBestScore;
+            if (typeof saved.quizAttempts === `number`) appState.quizAttempts = saved.quizAttempts;
+          }
+        }
+      } catch (err) {
+        /* Fallback to default empty state */
+      }
+
+      updateGlobalProgressPill();
+      renderFlashcard();
+      renderVocabList();
+      renderAlphabetBoard();
+      renderSpellingPreview();
+      renderDialogue();
+      renderRoleplay();
+      updateSteckbrief();
+      renderSyntaxTool();
+      loadScrambleExercise();
+      renderConjugation();
+      selectWWord(`Wer`);
+      startNewQuiz();
+      setupScrollReveal();
+
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+          window.notebookAppApi.notifyAppReady();
+        }
+      } catch (err) {}
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
